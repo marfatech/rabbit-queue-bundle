@@ -1,4 +1,6 @@
 ## [Unreleased]
+
+## [2.1.2] - 2021-07-15
 ### Changed
 - Change repository namespace to `marfatech`.
 
