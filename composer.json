@@ -1,5 +1,5 @@
 {
-    "name":        "wakeapp/rabbit-queue-bundle",
+    "name":        "marfatech/rabbit-queue-bundle",
     "description": "Provides possibility for working with rabbitMQ queue by consumers system",
     "type":        "symfony-bundle",
     "keywords":    ["symfony-bundle", "queue", "rabbitmq", "consumer"],

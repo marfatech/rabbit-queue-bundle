@@ -1,6 +1,9 @@
 ## [Unreleased]
+### Changed
+- Change repository namespace to `marfatech`.
 
 ## [2.1.1] - 2021-05-18
+### Added
 - Added support `psr/container` with version `>=1.1.0`.
 
 ## [2.1.0] - 2021-05-06
