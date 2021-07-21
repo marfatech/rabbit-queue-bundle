@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Consumer;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Consumer;
 
 use PhpAmqpLib\Message\AMQPMessage;
 
 interface ConsumerInterface
 {
-    public const TAG = 'wakeapp_rabbit_queue.consumer';
+    public const TAG = 'marfatech_rabbit_queue.consumer';
 
     public function getBatchSize(): int;
 

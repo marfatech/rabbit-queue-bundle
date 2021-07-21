@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Enum;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Enum;
 
 class QueueTypeEnum
 {

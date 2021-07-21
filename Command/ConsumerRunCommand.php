@@ -2,10 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Command;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Command;
 
 use Exception;
 use JsonException;
+use MarfaTech\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
+use MarfaTech\Bundle\RabbitQueueBundle\Consumer\ConsumerInterface;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\ConsumerNotFoundException;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\ConsumerSilentException;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\ReleasePartialException;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\RewindDelayPartialException;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\RewindPartialException;
+use MarfaTech\Bundle\RabbitQueueBundle\Registry\ConsumerRegistry;
+use MarfaTech\Bundle\RabbitQueueBundle\Registry\DefinitionRegistry;
 use PhpAmqpLib\Exception\AMQPTimeoutException;
 use PhpAmqpLib\Message\AMQPMessage;
 use Psr\Log\LoggerInterface;
@@ -16,15 +25,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Wakeapp\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
-use Wakeapp\Bundle\RabbitQueueBundle\Consumer\ConsumerInterface;
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\ConsumerNotFoundException;
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\ConsumerSilentException;
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\ReleasePartialException;
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\RewindDelayPartialException;
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\RewindPartialException;
-use Wakeapp\Bundle\RabbitQueueBundle\Registry\ConsumerRegistry;
-use Wakeapp\Bundle\RabbitQueueBundle\Registry\DefinitionRegistry;
 
 use function array_diff_key;
 use function array_flip;
@@ -220,11 +220,11 @@ class ConsumerRunCommand extends Command
 
     private function getIdleTimeout(): int
     {
-        return $this->parameterBag->get('wakeapp_rabbit_queue.consumer.idle_timeout');
+        return $this->parameterBag->get('marfatech_rabbit_queue.consumer.idle_timeout');
     }
 
     private function getWaitTimeout(): int
     {
-        return $this->parameterBag->get('wakeapp_rabbit_queue.consumer.wait_timeout');
+        return $this->parameterBag->get('marfatech_rabbit_queue.consumer.wait_timeout');
     }
 }

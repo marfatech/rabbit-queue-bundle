@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Hydrator;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Hydrator;
 
 use JsonSerializable;
 
 interface HydratorInterface
 {
-    public const TAG = 'wakeapp_rabbit_queue.hydrator';
+    public const TAG = 'marfatech_rabbit_queue.hydrator';
 
     public function hydrate(string $dataString);
 

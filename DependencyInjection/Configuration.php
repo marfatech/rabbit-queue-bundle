@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\DependencyInjection;
+namespace MarfaTech\Bundle\RabbitQueueBundle\DependencyInjection;
 
-use Wakeapp\Bundle\RabbitQueueBundle\Hydrator\JsonHydrator;
+use MarfaTech\Bundle\RabbitQueueBundle\Hydrator\JsonHydrator;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -15,7 +15,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('wakeapp_rabbit_queue');
+        $treeBuilder = new TreeBuilder('marfatech_rabbit_queue');
         $rootNode = $treeBuilder->getRootNode();
 
         $rootNode

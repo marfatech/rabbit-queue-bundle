@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Command;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Command;
 
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\DefinitionNotFoundException;
+use MarfaTech\Bundle\RabbitQueueBundle\Registry\ConsumerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\DefinitionNotFoundException;
-use Wakeapp\Bundle\RabbitQueueBundle\Registry\ConsumerRegistry;
 
 use function count;
 use function ksort;

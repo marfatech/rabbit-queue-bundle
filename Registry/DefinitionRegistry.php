@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Registry;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Registry;
 
-use Wakeapp\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\DefinitionNotFoundException;
+use MarfaTech\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\DefinitionNotFoundException;
 use Symfony\Contracts\Service\ServiceProviderInterface;
 
 use function sprintf;

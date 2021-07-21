@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Command;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Command;
 
+use MarfaTech\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\ExchangeEnum;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Exchange\AMQPExchangeType;
 use PhpAmqpLib\Wire\AMQPTable;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Wakeapp\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\ExchangeEnum;
 
 class UpdateDefinitionCommand extends Command
 {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Definition;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Definition;
 
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Exchange\AMQPExchangeType;
 use PhpAmqpLib\Wire\AMQPTable;
