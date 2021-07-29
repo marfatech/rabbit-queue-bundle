@@ -6,6 +6,6 @@ namespace MarfaTech\Bundle\RabbitQueueBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class MarfaTechRabbitQueueBundle extends Bundle
+class MarfatechRabbitQueueBundle extends Bundle
 {
 }

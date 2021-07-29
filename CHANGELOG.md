@@ -1,6 +1,20 @@
 ## [Unreleased]
 ### Changed
 - [BC BREAK] Refactoring namespace to `MarfaTech`.
+- [BC BREAK] Renamed root config `wakeapp_rabbit_queue` to `marfatech_rabbit_queue`.
+- [BC BREAK] Renamed tag `wakeapp_rabbit_queue.definition` to `marfatech_rabbit_queue.definition`.
+- [BC BREAK] Renamed tag `wakeapp_rabbit_queue.hydrator` to `marfatech_rabbit_queue.hydrator`.
+- [BC BREAK] Renamed tag `wakeapp_rabbit_queue.publisher` to `marfatech_rabbit_queue.publisher`.
+- [BC BREAK] Renamed parameter `wakeapp_rabbit_queue.connection.host` to `marfatech_rabbit_queue.connection.host`.
+- [BC BREAK] Renamed parameter `wakeapp_rabbit_queue.connection.port` to `marfatech_rabbit_queue.connection.port`.
+- [BC BREAK] Renamed parameter `wakeapp_rabbit_queue.connection.username` to `marfatech_rabbit_queue.connection.username`.
+- [BC BREAK] Renamed parameter `wakeapp_rabbit_queue.connection.password` to `marfatech_rabbit_queue.connection.password`.
+- [BC BREAK] Renamed parameter `wakeapp_rabbit_queue.connection.vhost` to `marfatech_rabbit_queue.connection.vhost`.
+- [BC BREAK] Renamed parameter `wakeapp_rabbit_queue.connection.connection_timeout` to `marfatech_rabbit_queue.connection.connection_timeout`.
+- [BC BREAK] Renamed parameter `wakeapp_rabbit_queue.connection.read_write_timeout` to `marfatech_rabbit_queue.connection.read_write_timeout`.
+- [BC BREAK] Renamed parameter `wakeapp_rabbit_queue.connection.heartbeat` to `marfatech_rabbit_queue.connection.heartbeat`.
+- [BC BREAK] Renamed parameter `wakeapp_rabbit_queue.consumer.idle_timeout` to `marfatech_rabbit_queue.consumer.idle_timeout`.
+- [BC BREAK] Renamed parameter `wakeapp_rabbit_queue.consumer.wait_timeout` to `marfatech_rabbit_queue.consumer.wait_timeout`.
 
 ## [2.1.2] - 2021-07-15
 ### Changed

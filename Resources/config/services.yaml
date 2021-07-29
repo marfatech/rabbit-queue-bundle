@@ -82,7 +82,7 @@ services:
 
     MarfaTech\Bundle\RabbitQueueBundle\Command\ConsumerRunCommand:
         calls:
-            - ['dependencyInjection', [ '@MarfaTech\Bundle\RabbitQueueBundle\Registry\ConsumerRegistry', '@MarfaTech\Bundle\RabbitQueueBundle\Client\RabbitMqClient', '@MarfaTech\Bundle\RabbitQueueBundle\Registry\DefinitionRegistry', '@Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface','@?logger' ]]
+            - ['dependencyInjection', [ '@MarfaTech\Bundle\RabbitQueueBundle\Registry\ConsumerRegistry', '@MarfaTech\Bundle\RabbitQueueBundle\Client\RabbitMqClient', '@MarfaTech\Bundle\RabbitQueueBundle\Registry\DefinitionRegistry', '@Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface', '@?logger' ]]
         tags: [ 'console.command' ]
 
     MarfaTech\Bundle\RabbitQueueBundle\Command\UpdateDefinitionCommand:

@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use function array_key_first;
 use function count;
 
-class MarfaTechRabbitQueueExtension extends Extension
+class MarfatechRabbitQueueExtension extends Extension
 {
     /**
      * {@inheritdoc}
