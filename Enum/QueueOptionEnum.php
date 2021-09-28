@@ -17,7 +17,7 @@ class QueueOptionEnum
     public const KEY = 'key';
 
     /**
-     * Key for grouping messages.
+     * Key for routing messages.
      */
     public const ROUTING_KEY = 'routing_key';
 }

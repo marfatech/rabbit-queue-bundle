@@ -6,6 +6,7 @@ namespace Wakeapp\Bundle\RabbitQueueBundle\Tests\Publisher;
 
 use PhpAmqpLib\Message\AMQPMessage;
 use Wakeapp\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
+use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueOptionEnum;
 use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
 use Wakeapp\Bundle\RabbitQueueBundle\Hydrator\JsonHydrator;
 use Wakeapp\Bundle\RabbitQueueBundle\Publisher\FifoPublisher;
@@ -46,7 +47,9 @@ class FifoPublisherTest extends AbstractTestCase
 
         $publisher = new FifoPublisher($client, $hydratorRegistry, JsonHydrator::KEY);
 
-        $publisher->publish($definition, self::TEST_MESSAGE, [], self::TEST_ROUTING);
+        $options = [QueueOptionEnum::ROUTING_KEY => self::TEST_ROUTING];
+
+        $publisher->publish($definition, self::TEST_MESSAGE, $options);
 
         self::assertTrue(true);
     }

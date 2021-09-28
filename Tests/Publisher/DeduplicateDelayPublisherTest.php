@@ -6,6 +6,7 @@ namespace Wakeapp\Bundle\RabbitQueueBundle\Tests\Publisher;
 
 use PhpAmqpLib\Message\AMQPMessage;
 use Wakeapp\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
+use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueOptionEnum;
 use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
 use Wakeapp\Bundle\RabbitQueueBundle\Exception\RabbitQueueException;
 use Wakeapp\Bundle\RabbitQueueBundle\Hydrator\JsonHydrator;
@@ -43,12 +44,15 @@ class DeduplicateDelayPublisherTest extends AbstractTestCase
         $client = $this->createMock(RabbitMqClient::class);
         $client->expects(self::once())
             ->method('publish')
-            ->with(self::isInstanceOf(AMQPMessage::class), self::TEST_EXCHANGE, '')
+            ->with(self::isInstanceOf(AMQPMessage::class), self::TEST_EXCHANGE, self::TEST_ROUTING)
         ;
 
         $publisher = new DeduplicateDelayPublisher($client, $hydratorRegistry, JsonHydrator::KEY);
 
-        $publisher->publish($definition, self::TEST_MESSAGE, self::TEST_OPTIONS);
+        $options = self::TEST_OPTIONS;
+        $options[QueueOptionEnum::ROUTING_KEY] = self::TEST_ROUTING;
+
+        $publisher->publish($definition, self::TEST_MESSAGE, $options);
 
         self::assertTrue(true);
     }

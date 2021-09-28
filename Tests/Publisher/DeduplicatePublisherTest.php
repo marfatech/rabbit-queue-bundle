@@ -6,6 +6,7 @@ namespace Wakeapp\Bundle\RabbitQueueBundle\Tests\Publisher;
 
 use PhpAmqpLib\Message\AMQPMessage;
 use Wakeapp\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
+use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueOptionEnum;
 use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
 use Wakeapp\Bundle\RabbitQueueBundle\Exception\RabbitQueueException;
 use Wakeapp\Bundle\RabbitQueueBundle\Hydrator\JsonHydrator;
@@ -48,7 +49,10 @@ class DeduplicatePublisherTest extends AbstractTestCase
 
         $publisher = new DeduplicatePublisher($client, $hydratorRegistry, JsonHydrator::KEY);
 
-        $publisher->publish($definition, self::TEST_MESSAGE, self::TEST_OPTIONS, self::TEST_ROUTING);
+        $options = self::TEST_OPTIONS;
+        $options[QueueOptionEnum::ROUTING_KEY] = self::TEST_ROUTING;
+
+        $publisher->publish($definition, self::TEST_MESSAGE, $options);
 
         self::assertTrue(true);
     }
