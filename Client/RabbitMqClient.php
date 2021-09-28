@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Client;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Client;
 
-use PhpAmqpLib\Wire\AMQPTable;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\ExchangeEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueHeaderOptionEnum;
 use ErrorException;
 use Exception;
 use InvalidArgumentException;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\ExchangeEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueHeaderOptionEnum;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Exception\AMQPOutOfBoundsException;
 use PhpAmqpLib\Exception\AMQPRuntimeException;
 use PhpAmqpLib\Exception\AMQPTimeoutException;
 use PhpAmqpLib\Message\AMQPMessage;
+use PhpAmqpLib\Wire\AMQPTable;
 
 class RabbitMqClient
 {

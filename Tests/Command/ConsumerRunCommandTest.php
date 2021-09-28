@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Tests\Command;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Tests\Command;
 
+use MarfaTech\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
+use MarfaTech\Bundle\RabbitQueueBundle\Command\ConsumerRunCommand;
+use MarfaTech\Bundle\RabbitQueueBundle\Registry\ConsumerRegistry;
+use MarfaTech\Bundle\RabbitQueueBundle\Registry\DefinitionRegistry;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Wakeapp\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
-use Wakeapp\Bundle\RabbitQueueBundle\Command\ConsumerRunCommand;
-use Wakeapp\Bundle\RabbitQueueBundle\Registry\ConsumerRegistry;
-use Wakeapp\Bundle\RabbitQueueBundle\Registry\DefinitionRegistry;
 
 class ConsumerRunCommandTest extends TestCase
 {

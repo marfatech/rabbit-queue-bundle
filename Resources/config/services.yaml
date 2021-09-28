@@ -1,101 +1,101 @@
 services:
     PhpAmqpLib\Connection\AMQPStreamConnection:
         arguments:
-            - '%wakeapp_rabbit_queue.connection.host%'
-            - '%wakeapp_rabbit_queue.connection.port%'
-            - '%wakeapp_rabbit_queue.connection.username%'
-            - '%wakeapp_rabbit_queue.connection.password%'
-            - '%wakeapp_rabbit_queue.connection.vhost%'
+            - '%marfatech_rabbit_queue.connection.host%'
+            - '%marfatech_rabbit_queue.connection.port%'
+            - '%marfatech_rabbit_queue.connection.username%'
+            - '%marfatech_rabbit_queue.connection.password%'
+            - '%marfatech_rabbit_queue.connection.vhost%'
             - false
             - 'AMQPLAIN'
             - ~
             - 'en_US'
-            - '%wakeapp_rabbit_queue.connection.connection_timeout%'
-            - '%wakeapp_rabbit_queue.connection.read_write_timeout%'
+            - '%marfatech_rabbit_queue.connection.connection_timeout%'
+            - '%marfatech_rabbit_queue.connection.read_write_timeout%'
             - ~
             - false
-            - '%wakeapp_rabbit_queue.connection.heartbeat%'
+            - '%marfatech_rabbit_queue.connection.heartbeat%'
 
-    Wakeapp\Bundle\RabbitQueueBundle\Registry\ConsumerRegistry:
+    MarfaTech\Bundle\RabbitQueueBundle\Registry\ConsumerRegistry:
         arguments:
-            - !tagged_locator { tag: !php/const Wakeapp\Bundle\RabbitQueueBundle\Consumer\ConsumerInterface::TAG, default_index_method: 'getName' }
+            - !tagged_locator { tag: !php/const MarfaTech\Bundle\RabbitQueueBundle\Consumer\ConsumerInterface::TAG, default_index_method: 'getName' }
 
-    Wakeapp\Bundle\RabbitQueueBundle\Registry\PublisherRegistry:
+    MarfaTech\Bundle\RabbitQueueBundle\Registry\PublisherRegistry:
         arguments:
-            - !tagged_locator { tag: !php/const Wakeapp\Bundle\RabbitQueueBundle\Publisher\PublisherInterface::TAG, default_index_method: 'getQueueType' }
+            - !tagged_locator { tag: !php/const MarfaTech\Bundle\RabbitQueueBundle\Publisher\PublisherInterface::TAG, default_index_method: 'getQueueType' }
 
-    Wakeapp\Bundle\RabbitQueueBundle\Registry\DefinitionRegistry:
+    MarfaTech\Bundle\RabbitQueueBundle\Registry\DefinitionRegistry:
         arguments:
-            - !tagged_locator { tag: !php/const Wakeapp\Bundle\RabbitQueueBundle\Definition\DefinitionInterface::TAG, default_index_method: 'getQueueName' }
+            - !tagged_locator { tag: !php/const MarfaTech\Bundle\RabbitQueueBundle\Definition\DefinitionInterface::TAG, default_index_method: 'getQueueName' }
 
-    Wakeapp\Bundle\RabbitQueueBundle\Registry\HydratorRegistry:
+    MarfaTech\Bundle\RabbitQueueBundle\Registry\HydratorRegistry:
         arguments:
-            - !tagged_locator { tag: !php/const Wakeapp\Bundle\RabbitQueueBundle\Hydrator\HydratorInterface::TAG, default_index_method: 'getKey' }
+            - !tagged_locator { tag: !php/const MarfaTech\Bundle\RabbitQueueBundle\Hydrator\HydratorInterface::TAG, default_index_method: 'getKey' }
 
-    Wakeapp\Bundle\RabbitQueueBundle\Hydrator\JsonHydrator:
+    MarfaTech\Bundle\RabbitQueueBundle\Hydrator\JsonHydrator:
         tags:
-            - { name: !php/const Wakeapp\Bundle\RabbitQueueBundle\Hydrator\HydratorInterface::TAG, default_index_method: 'getKey' }
+            - { name: !php/const MarfaTech\Bundle\RabbitQueueBundle\Hydrator\HydratorInterface::TAG, default_index_method: 'getKey' }
 
-    Wakeapp\Bundle\RabbitQueueBundle\Hydrator\PlainTextHydrator:
+    MarfaTech\Bundle\RabbitQueueBundle\Hydrator\PlainTextHydrator:
         tags:
-            - { name: !php/const Wakeapp\Bundle\RabbitQueueBundle\Hydrator\HydratorInterface::TAG, default_index_method: 'getKey' }
+            - { name: !php/const MarfaTech\Bundle\RabbitQueueBundle\Hydrator\HydratorInterface::TAG, default_index_method: 'getKey' }
 
-    Wakeapp\Bundle\RabbitQueueBundle\Publisher\AbstractPublisher:
+    MarfaTech\Bundle\RabbitQueueBundle\Publisher\AbstractPublisher:
         arguments:
-            - '@Wakeapp\Bundle\RabbitQueueBundle\Client\RabbitMqClient'
-            - '@Wakeapp\Bundle\RabbitQueueBundle\Registry\HydratorRegistry'
-            - '%wakeapp_rabbit_queue.hydrator_name%'
+            - '@MarfaTech\Bundle\RabbitQueueBundle\Client\RabbitMqClient'
+            - '@MarfaTech\Bundle\RabbitQueueBundle\Registry\HydratorRegistry'
+            - '%marfatech_rabbit_queue.hydrator_name%'
 
-    Wakeapp\Bundle\RabbitQueueBundle\Publisher\FifoPublisher:
-        parent: 'Wakeapp\Bundle\RabbitQueueBundle\Publisher\AbstractPublisher'
+    MarfaTech\Bundle\RabbitQueueBundle\Publisher\FifoPublisher:
+        parent: 'MarfaTech\Bundle\RabbitQueueBundle\Publisher\AbstractPublisher'
         tags:
-            - { name: !php/const Wakeapp\Bundle\RabbitQueueBundle\Publisher\PublisherInterface::TAG, default_index_method: 'getQueueType' }
+            - { name: !php/const MarfaTech\Bundle\RabbitQueueBundle\Publisher\PublisherInterface::TAG, default_index_method: 'getQueueType' }
 
-    Wakeapp\Bundle\RabbitQueueBundle\Publisher\DelayPublisher:
-        parent: 'Wakeapp\Bundle\RabbitQueueBundle\Publisher\AbstractPublisher'
+    MarfaTech\Bundle\RabbitQueueBundle\Publisher\DelayPublisher:
+        parent: 'MarfaTech\Bundle\RabbitQueueBundle\Publisher\AbstractPublisher'
         tags:
-            - { name: !php/const Wakeapp\Bundle\RabbitQueueBundle\Publisher\PublisherInterface::TAG, default_index_method: 'getQueueType' }
+            - { name: !php/const MarfaTech\Bundle\RabbitQueueBundle\Publisher\PublisherInterface::TAG, default_index_method: 'getQueueType' }
 
-    Wakeapp\Bundle\RabbitQueueBundle\Publisher\DeduplicateDelayPublisher:
-        parent: 'Wakeapp\Bundle\RabbitQueueBundle\Publisher\AbstractPublisher'
+    MarfaTech\Bundle\RabbitQueueBundle\Publisher\DeduplicateDelayPublisher:
+        parent: 'MarfaTech\Bundle\RabbitQueueBundle\Publisher\AbstractPublisher'
         tags:
-            - { name: !php/const Wakeapp\Bundle\RabbitQueueBundle\Publisher\PublisherInterface::TAG, default_index_method: 'getQueueType' }
+            - { name: !php/const MarfaTech\Bundle\RabbitQueueBundle\Publisher\PublisherInterface::TAG, default_index_method: 'getQueueType' }
 
-    Wakeapp\Bundle\RabbitQueueBundle\Publisher\DeduplicatePublisher:
-        parent: 'Wakeapp\Bundle\RabbitQueueBundle\Publisher\AbstractPublisher'
+    MarfaTech\Bundle\RabbitQueueBundle\Publisher\DeduplicatePublisher:
+        parent: 'MarfaTech\Bundle\RabbitQueueBundle\Publisher\AbstractPublisher'
         tags:
-            - { name: !php/const Wakeapp\Bundle\RabbitQueueBundle\Publisher\PublisherInterface::TAG, default_index_method: 'getQueueType' }
+            - { name: !php/const MarfaTech\Bundle\RabbitQueueBundle\Publisher\PublisherInterface::TAG, default_index_method: 'getQueueType' }
 
-    Wakeapp\Bundle\RabbitQueueBundle\Publisher\RouterPublisher:
-        parent: 'Wakeapp\Bundle\RabbitQueueBundle\Publisher\AbstractPublisher'
+    MarfaTech\Bundle\RabbitQueueBundle\Publisher\RouterPublisher:
+        parent: 'MarfaTech\Bundle\RabbitQueueBundle\Publisher\AbstractPublisher'
         tags:
-            - { name: !php/const Wakeapp\Bundle\RabbitQueueBundle\Publisher\PublisherInterface::TAG, default_index_method: 'getQueueType' }
+            - { name: !php/const MarfaTech\Bundle\RabbitQueueBundle\Publisher\PublisherInterface::TAG, default_index_method: 'getQueueType' }
 
-    Wakeapp\Bundle\RabbitQueueBundle\Producer\RabbitMqProducer:
+    MarfaTech\Bundle\RabbitQueueBundle\Producer\RabbitMqProducer:
         arguments:
-            - '@Wakeapp\Bundle\RabbitQueueBundle\Registry\DefinitionRegistry'
-            - '@Wakeapp\Bundle\RabbitQueueBundle\Registry\HydratorRegistry'
-            - '@Wakeapp\Bundle\RabbitQueueBundle\Registry\PublisherRegistry'
-            - '%wakeapp_rabbit_queue.hydrator_name%'
+            - '@MarfaTech\Bundle\RabbitQueueBundle\Registry\DefinitionRegistry'
+            - '@MarfaTech\Bundle\RabbitQueueBundle\Registry\HydratorRegistry'
+            - '@MarfaTech\Bundle\RabbitQueueBundle\Registry\PublisherRegistry'
+            - '%marfatech_rabbit_queue.hydrator_name%'
 
-    Wakeapp\Bundle\RabbitQueueBundle\Producer\RabbitMqProducerInterface: '@Wakeapp\Bundle\RabbitQueueBundle\Producer\RabbitMqProducer'
+    MarfaTech\Bundle\RabbitQueueBundle\Producer\RabbitMqProducerInterface: '@MarfaTech\Bundle\RabbitQueueBundle\Producer\RabbitMqProducer'
 
-    Wakeapp\Bundle\RabbitQueueBundle\Command\ConsumerListCommand:
+    MarfaTech\Bundle\RabbitQueueBundle\Command\ConsumerListCommand:
         calls:
-            - [ 'dependencyInjection', [ '@Wakeapp\Bundle\RabbitQueueBundle\Registry\ConsumerRegistry'] ]
+            - [ 'dependencyInjection', [ '@MarfaTech\Bundle\RabbitQueueBundle\Registry\ConsumerRegistry'] ]
         tags: [ 'console.command' ]
 
-    Wakeapp\Bundle\RabbitQueueBundle\Command\ConsumerRunCommand:
+    MarfaTech\Bundle\RabbitQueueBundle\Command\ConsumerRunCommand:
         calls:
-            - ['dependencyInjection', [ '@Wakeapp\Bundle\RabbitQueueBundle\Registry\ConsumerRegistry', '@Wakeapp\Bundle\RabbitQueueBundle\Client\RabbitMqClient', '@Wakeapp\Bundle\RabbitQueueBundle\Registry\DefinitionRegistry', '@Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface','@?logger' ]]
+            - ['dependencyInjection', [ '@MarfaTech\Bundle\RabbitQueueBundle\Registry\ConsumerRegistry', '@MarfaTech\Bundle\RabbitQueueBundle\Client\RabbitMqClient', '@MarfaTech\Bundle\RabbitQueueBundle\Registry\DefinitionRegistry', '@Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface', '@?logger' ]]
         tags: [ 'console.command' ]
 
-    Wakeapp\Bundle\RabbitQueueBundle\Command\UpdateDefinitionCommand:
+    MarfaTech\Bundle\RabbitQueueBundle\Command\UpdateDefinitionCommand:
         calls:
             - [ 'dependencyInjection', [ '@PhpAmqpLib\Connection\AMQPStreamConnection' ] ]
-            - [ 'setDefinitionList', [ !tagged_iterator { tag: !php/const Wakeapp\Bundle\RabbitQueueBundle\Definition\DefinitionInterface::TAG, default_index_method: 'getQueueName' } ] ]
+            - [ 'setDefinitionList', [ !tagged_iterator { tag: !php/const MarfaTech\Bundle\RabbitQueueBundle\Definition\DefinitionInterface::TAG, default_index_method: 'getQueueName' } ] ]
         tags: [ 'console.command' ]
 
-    Wakeapp\Bundle\RabbitQueueBundle\Client\RabbitMqClient:
+    MarfaTech\Bundle\RabbitQueueBundle\Client\RabbitMqClient:
         arguments:
             - '@PhpAmqpLib\Connection\AMQPStreamConnection'

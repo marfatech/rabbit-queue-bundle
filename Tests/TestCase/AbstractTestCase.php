@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Tests\TestCase;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Tests\TestCase;
 
+use MarfaTech\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
+use MarfaTech\Bundle\RabbitQueueBundle\Hydrator\JsonHydrator;
+use MarfaTech\Bundle\RabbitQueueBundle\Registry\HydratorRegistry;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PHPUnit\Framework\TestCase;
-use Wakeapp\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
-use Wakeapp\Bundle\RabbitQueueBundle\Hydrator\JsonHydrator;
-use Wakeapp\Bundle\RabbitQueueBundle\Registry\HydratorRegistry;
 
 class AbstractTestCase extends TestCase
 {
@@ -31,7 +31,7 @@ class AbstractTestCase extends TestCase
                 self::$queueName = $queueName;
             }
 
-            public function init(AMQPStreamConnection $connection)
+            public function init(AMQPStreamConnection $connection): void
             {
             }
 

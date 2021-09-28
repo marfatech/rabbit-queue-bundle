@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Consumer;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Consumer;
 
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\HydratorNotFoundException;
-use Wakeapp\Bundle\RabbitQueueBundle\Registry\HydratorRegistry;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\HydratorNotFoundException;
+use MarfaTech\Bundle\RabbitQueueBundle\Registry\HydratorRegistry;
 use PhpAmqpLib\Message\AMQPMessage;
 
 abstract class AbstractConsumer implements ConsumerInterface

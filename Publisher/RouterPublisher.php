@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Publisher;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Publisher;
 
-use Wakeapp\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueHeaderOptionEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueOptionEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueHeaderOptionEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueOptionEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
 
 class RouterPublisher extends AbstractPublisher
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Hydrator;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Hydrator;
 
 class PlainTextHydrator implements HydratorInterface
 {

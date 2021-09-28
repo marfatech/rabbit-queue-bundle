@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Registry;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Registry;
 
-use Wakeapp\Bundle\RabbitQueueBundle\Consumer\AbstractConsumer;
-use Wakeapp\Bundle\RabbitQueueBundle\Consumer\ConsumerInterface;
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\ConsumerNotFoundException;
+use MarfaTech\Bundle\RabbitQueueBundle\Consumer\AbstractConsumer;
+use MarfaTech\Bundle\RabbitQueueBundle\Consumer\ConsumerInterface;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\ConsumerNotFoundException;
 use Symfony\Contracts\Service\ServiceProviderInterface;
 
 use function sprintf;

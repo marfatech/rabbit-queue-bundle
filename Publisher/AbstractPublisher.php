@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Publisher;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Publisher;
 
+use MarfaTech\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
+use MarfaTech\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueOptionEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Registry\HydratorRegistry;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPTable;
-use Wakeapp\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
-use Wakeapp\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueOptionEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Registry\HydratorRegistry;
 
 abstract class AbstractPublisher implements PublisherInterface
 {
