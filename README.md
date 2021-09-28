@@ -503,7 +503,7 @@ php bin/console rabbit:consumer:run example
 --------
 
 `RouterPublisher` следует использовать в случаях, когда нужно множество очередей, а каждое сообщение должно попадать 
-сразу в некоторое их подмножество, определяемое по `routingKey` сообщения. Для таких целей нужно создать `Definition`,
+сразу в некоторое их подмножество, определяемое по `routing_key` сообщения. Для таких целей нужно создать `Definition`,
 в котором будет определена только `exchange` типа `direct`, `topic` или `fanout`. Эта `Definition` будет использоваться 
 в качестве точки входя для сообщений. После этого нужно создать по одной `Definition` на каждую очередь, и все их
 биндить на первую `Definition`. Можно создать сложную маршрутизацию, если вместо очередей создавать и биндить 
@@ -636,17 +636,19 @@ class ExampleRoutedQueryDefinition implements DefinitionInterface
 ```
 
 После определения биржи и очередей отправка сообщений будет выглядеть как и раньше, но сообщения будут попадать в
-очереди только при подходящем routingKey (четвертый параметр в методе put()).
+очереди только при подходящем `routing_key`, который нужно передавать в параметре `$options` метода put().
 
 ```php
 <?php
 $data = ['message' => 'example']; # Сообщение
-$options = [];
 
 /** @var \Wakeapp\Bundle\RabbitQueueBundle\Producer\RabbitMqProducer $producer */
-$producer->put('queue_name', $data, $options, 'small.orange.bicycle'); // попадет в очередь по роуту '*.orange.*'
-$producer->put('queue_name', $data, $options, 'big.aaa.bbb.and.more.words'); // попадет в очередь по роуту 'big.#'
-$producer->put('queue_name', $data, $options, 'small.black.bicycle'); // НЕ попадет в очередь из примера
+// попадет в очередь по роуту '*.orange.*'
+$producer->put('queue_name', $data, [QueueOptionEnum::ROUTING_KEY => 'small.orange.bicycle']);
+// попадет в очередь по роуту 'big.#'
+$producer->put('queue_name', $data, [QueueOptionEnum::ROUTING_KEY => 'big.aaa.bbb.and.more.words']);
+// НЕ попадет в очередь из примера
+$producer->put('queue_name', $data, [QueueOptionEnum::ROUTING_KEY => 'small.black.bicycle']);
 ```
 
 **Важно!!! Длина routeKey не должна превышать 255 символов**

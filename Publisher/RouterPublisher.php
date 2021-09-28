@@ -8,7 +8,6 @@ use Wakeapp\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
 use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueHeaderOptionEnum;
 use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueOptionEnum;
 use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\RabbitQueueException;
 
 class RouterPublisher extends AbstractPublisher
 {
@@ -25,6 +24,10 @@ class RouterPublisher extends AbstractPublisher
         if (isset($options[QueueOptionEnum::DELAY])) {
             $amqpTableOption[QueueHeaderOptionEnum::X_DELAY] = $options[QueueOptionEnum::DELAY] * 1000;
             $amqpTableOption[QueueHeaderOptionEnum::X_CACHE_TTL] = $options[QueueOptionEnum::DELAY] * 1000;
+        }
+
+        if (isset($options[QueueOptionEnum::ROUTING_KEY])) {
+            unset($options[QueueOptionEnum::ROUTING_KEY]);
         }
 
         return array_merge($amqpTableOption, $options);

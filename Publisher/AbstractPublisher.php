@@ -8,6 +8,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPTable;
 use Wakeapp\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
 use Wakeapp\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
+use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueOptionEnum;
 use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
 use Wakeapp\Bundle\RabbitQueueBundle\Registry\HydratorRegistry;
 
@@ -29,10 +30,11 @@ abstract class AbstractPublisher implements PublisherInterface
 
     abstract protected function prepareOptions(DefinitionInterface $definition, array $options): array;
 
-    public function publish(DefinitionInterface $definition, string $dataString, array $options = [], string $routingKey = ''): void
+    public function publish(DefinitionInterface $definition, string $dataString, array $options = []): void
     {
         $exchangeName = $this->getDefinitionExchangeName($definition);
-        $route = $routingKey !== '' ? $routingKey : $this->getDefinitionQueueName($definition);
+
+        $route = $options[QueueOptionEnum::ROUTING_KEY] ?? $this->getDefinitionQueueName($definition);
 
         $message = new AMQPMessage($dataString, [
             'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT,
