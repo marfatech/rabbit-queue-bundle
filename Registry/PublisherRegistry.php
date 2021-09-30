@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Registry;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Registry;
 
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\PublisherNotFoundException;
-use Wakeapp\Bundle\RabbitQueueBundle\Publisher\AbstractPublisher;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\PublisherNotFoundException;
+use MarfaTech\Bundle\RabbitQueueBundle\Publisher\AbstractPublisher;
 use Symfony\Contracts\Service\ServiceProviderInterface;
 
 use function sprintf;
@@ -24,8 +24,10 @@ class PublisherRegistry
      */
     public function getPublisher(int $queueType): AbstractPublisher
     {
-        if ($this->publisherRegistry->has((string) $queueType)) {
-            return $this->publisherRegistry->get((string) $queueType);
+        $queueTypeId = (string) $queueType;
+
+        if ($this->publisherRegistry->has($queueTypeId)) {
+            return $this->publisherRegistry->get($queueTypeId);
         }
 
         throw new PublisherNotFoundException(sprintf('Publisher for queue type "%s" not found', $queueType));

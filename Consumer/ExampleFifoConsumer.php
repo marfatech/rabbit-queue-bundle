@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Consumer;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Consumer;
 
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueEnum;
 
 class ExampleFifoConsumer extends AbstractConsumer
 {

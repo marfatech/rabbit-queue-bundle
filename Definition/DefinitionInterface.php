@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Definition;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Definition;
 
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 interface DefinitionInterface
 {
-    public const TAG = 'wakeapp_rabbit_queue.definition';
+    public const TAG = 'marfatech_rabbit_queue.definition';
 
     /**
      * Declare definition to Rabbit MQ.
@@ -18,7 +18,7 @@ interface DefinitionInterface
     public function init(AMQPStreamConnection $connection);
 
     /**
-     * Get queue name or exchange name which is a entry point for to handle message
+     * Get queue name or exchange name which is an entry point for to handle message
      */
     public function getEntryPointName(): string;
 

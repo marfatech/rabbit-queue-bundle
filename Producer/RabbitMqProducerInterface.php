@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Producer;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Producer;
 
 interface RabbitMqProducerInterface
 {

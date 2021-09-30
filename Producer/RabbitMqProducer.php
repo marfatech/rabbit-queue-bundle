@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Producer;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Producer;
 
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\DefinitionNotFoundException;
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\HydratorNotFoundException;
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\RabbitQueueException;
-use Wakeapp\Bundle\RabbitQueueBundle\Registry\DefinitionRegistry;
-use Wakeapp\Bundle\RabbitQueueBundle\Registry\HydratorRegistry;
-use Wakeapp\Bundle\RabbitQueueBundle\Registry\PublisherRegistry;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\DefinitionNotFoundException;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\HydratorNotFoundException;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\RabbitQueueException;
+use MarfaTech\Bundle\RabbitQueueBundle\Registry\DefinitionRegistry;
+use MarfaTech\Bundle\RabbitQueueBundle\Registry\HydratorRegistry;
+use MarfaTech\Bundle\RabbitQueueBundle\Registry\PublisherRegistry;
 
 class RabbitMqProducer implements RabbitMqProducerInterface
 {

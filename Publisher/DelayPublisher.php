@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Publisher;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Publisher;
 
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueHeaderOptionEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueOptionEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\RabbitQueueException;
+use MarfaTech\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueHeaderOptionEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueOptionEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\RabbitQueueException;
 
 use function is_int;
 use function sprintf;
@@ -17,6 +17,9 @@ class DelayPublisher extends AbstractPublisher
 {
     public const QUEUE_TYPE = QueueTypeEnum::FIFO | QueueTypeEnum::DELAY;
 
+    /**
+     * @throws RabbitQueueException
+     */
     protected function prepareOptions(DefinitionInterface $definition, array $options): array
     {
         $delay = $options[QueueOptionEnum::DELAY] ?? null;

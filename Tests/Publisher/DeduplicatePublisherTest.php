@@ -2,21 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Tests\Publisher;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Tests\Publisher;
 
+use MarfaTech\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\HydratorNotFoundException;
+use MarfaTech\Bundle\RabbitQueueBundle\Hydrator\JsonHydrator;
+use MarfaTech\Bundle\RabbitQueueBundle\Publisher\DeduplicatePublisher;
+use MarfaTech\Bundle\RabbitQueueBundle\Tests\TestCase\AbstractTestCase;
 use PhpAmqpLib\Message\AMQPMessage;
-use Wakeapp\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\RabbitQueueException;
-use Wakeapp\Bundle\RabbitQueueBundle\Hydrator\JsonHydrator;
-use Wakeapp\Bundle\RabbitQueueBundle\Publisher\DeduplicatePublisher;
-use Wakeapp\Bundle\RabbitQueueBundle\Tests\TestCase\AbstractTestCase;
 
 class DeduplicatePublisherTest extends AbstractTestCase
 {
     public const TEST_OPTIONS = ['key' => 'test'];
     public const QUEUE_TYPE = QueueTypeEnum::FIFO | QueueTypeEnum::DEDUPLICATE;
 
+    /**
+     * @throws HydratorNotFoundException
+     */
     public function testPublish(): void
     {
         $definition = $this->createDefinitionMock(self::TEST_QUEUE_NAME, self::TEST_EXCHANGE, self::QUEUE_TYPE);
@@ -35,6 +38,9 @@ class DeduplicatePublisherTest extends AbstractTestCase
         self::assertTrue(true);
     }
 
+    /**
+     * @throws HydratorNotFoundException
+     */
     public function testPublishWithRouting(): void
     {
         $definition = $this->createDefinitionMock(self::TEST_QUEUE_NAME, self::TEST_EXCHANGE, self::QUEUE_TYPE);

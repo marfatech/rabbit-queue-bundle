@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Tests\Publisher;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Tests\Publisher;
 
+use MarfaTech\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\RabbitQueueException;
+use MarfaTech\Bundle\RabbitQueueBundle\Hydrator\JsonHydrator;
+use MarfaTech\Bundle\RabbitQueueBundle\Publisher\DeduplicateDelayPublisher;
+use MarfaTech\Bundle\RabbitQueueBundle\Tests\TestCase\AbstractTestCase;
 use PhpAmqpLib\Message\AMQPMessage;
-use Wakeapp\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\RabbitQueueException;
-use Wakeapp\Bundle\RabbitQueueBundle\Hydrator\JsonHydrator;
-use Wakeapp\Bundle\RabbitQueueBundle\Publisher\DeduplicateDelayPublisher;
-use Wakeapp\Bundle\RabbitQueueBundle\Tests\TestCase\AbstractTestCase;
 
 class DeduplicateDelayPublisherTest extends AbstractTestCase
 {

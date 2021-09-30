@@ -2,17 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Tests\Producer;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Tests\Producer;
 
+use MarfaTech\Bundle\RabbitQueueBundle\Definition\ExampleDefinition;
+use MarfaTech\Bundle\RabbitQueueBundle\Definition\ExampleFifoDefinition;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\DefinitionNotFoundException;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\HydratorNotFoundException;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\RabbitQueueException;
+use MarfaTech\Bundle\RabbitQueueBundle\Hydrator\JsonHydrator;
+use MarfaTech\Bundle\RabbitQueueBundle\Producer\RabbitMqProducer;
+use MarfaTech\Bundle\RabbitQueueBundle\Registry\DefinitionRegistry;
+use MarfaTech\Bundle\RabbitQueueBundle\Registry\HydratorRegistry;
+use MarfaTech\Bundle\RabbitQueueBundle\Registry\PublisherRegistry;
 use PHPUnit\Framework\TestCase;
-use Wakeapp\Bundle\RabbitQueueBundle\Definition\ExampleDefinition;
-use Wakeapp\Bundle\RabbitQueueBundle\Definition\ExampleFifoDefinition;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Hydrator\JsonHydrator;
-use Wakeapp\Bundle\RabbitQueueBundle\Producer\RabbitMqProducer;
-use Wakeapp\Bundle\RabbitQueueBundle\Registry\DefinitionRegistry;
-use Wakeapp\Bundle\RabbitQueueBundle\Registry\HydratorRegistry;
-use Wakeapp\Bundle\RabbitQueueBundle\Registry\PublisherRegistry;
 
 class RabbitMqProducerTest extends TestCase
 {
@@ -43,6 +46,11 @@ class RabbitMqProducerTest extends TestCase
         $this->producer = new RabbitMqProducer($definitionRegistry, $hydratorRegistry, $publisherRegistry, JsonHydrator::KEY);
     }
 
+    /**
+     * @throws HydratorNotFoundException
+     * @throws DefinitionNotFoundException
+     * @throws RabbitQueueException
+     */
     public function testPut(): void
     {
         $this->producer->put(QueueEnum::EXAMPLE_FIFO, self::TEST_MESSAGE);

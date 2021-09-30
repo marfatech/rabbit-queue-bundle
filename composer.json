@@ -1,5 +1,5 @@
 {
-    "name":        "wakeapp/rabbit-queue-bundle",
+    "name":        "marfatech/rabbit-queue-bundle",
     "description": "Provides possibility for working with rabbitMQ queue by consumers system",
     "type":        "symfony-bundle",
     "keywords":    ["symfony-bundle", "queue", "rabbitmq", "consumer"],
@@ -18,7 +18,9 @@
 
     "require-dev": {
         "psr/log":                          "~1.0",
-        "phpunit/phpunit":                  "^6.5 || ^7.0 || ^8.0 || ^9.0"
+        "phpunit/phpunit":                  "^6.5||^7.0||^8.0||^9.0",
+        "symfony/monolog-bundle":           "^3.7",
+        "symfony/framework-bundle":         "^5.3"
     },
 
     "suggest": {
@@ -28,7 +30,7 @@
 
     "autoload": {
         "psr-4": {
-            "Wakeapp\\Bundle\\RabbitQueueBundle\\": ""
+            "MarfaTech\\Bundle\\RabbitQueueBundle\\": ""
         }
     }
 }

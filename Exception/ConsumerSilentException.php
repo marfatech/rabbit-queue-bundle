@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Exception;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Exception;
 
 use RuntimeException;
 

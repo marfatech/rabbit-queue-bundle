@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Hydrator;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Hydrator;
 
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\RabbitQueueException;
 use JsonException;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\RabbitQueueException;
+
+use function json_decode;
+use function json_encode;
 
 use const JSON_THROW_ON_ERROR;
-
-use function json_encode;
 
 class JsonHydrator implements HydratorInterface
 {

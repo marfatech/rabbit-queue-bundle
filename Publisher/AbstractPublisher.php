@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Publisher;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Publisher;
 
+use MarfaTech\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
+use MarfaTech\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\HydratorNotFoundException;
+use MarfaTech\Bundle\RabbitQueueBundle\Registry\HydratorRegistry;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPTable;
-use Wakeapp\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
-use Wakeapp\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Registry\HydratorRegistry;
 
 abstract class AbstractPublisher implements PublisherInterface
 {
@@ -29,6 +30,9 @@ abstract class AbstractPublisher implements PublisherInterface
 
     abstract protected function prepareOptions(DefinitionInterface $definition, array $options): array;
 
+    /**
+     * @throws HydratorNotFoundException
+     */
     public function publish(DefinitionInterface $definition, string $dataString, array $options = [], string $routingKey = ''): void
     {
         $exchangeName = $this->getDefinitionExchangeName($definition);

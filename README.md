@@ -1,6 +1,9 @@
 Rabbit Queue Bundle
 ======================
 
+[![Latest Stable Version](https://poser.pugx.org/marfatech/rabbit-queue-bundle/v/stable)](https://packagist.org/packages/marfatech/rabbit-queue-bundle)
+[![Total Downloads](https://poser.pugx.org/marfatech/rabbit-queue-bundle/downloads)](https://packagist.org/packages/marfatech/rabbit-queue-bundle)
+
 Введение
 --------
 
@@ -43,7 +46,7 @@ Rabbit Queue Bundle
 В директории проекта, выполните следующую команду для загрузки наиболее подходящей
 стабильной версии этого бандла:
 ```bash
-    composer require wakeapp/rabbit-queue-bundle
+    composer require marfatech/rabbit-queue-bundle
 ```
 *Эта команда подразумевает что [Composer](https://getcomposer.org) установлен и доступен глобально.*
 
@@ -64,7 +67,7 @@ class AppKernel extends Kernel
         $bundles = [
             // ...
 
-            new Wakeapp\Bundle\RabbitQueueBundle\WakeappRabbitQueueBundle(),
+            new MarfaTech\Bundle\RabbitQueueBundle\MarfaTechRabbitQueueBundle(),
         ];
 
         return $bundles;
@@ -80,8 +83,8 @@ class AppKernel extends Kernel
 Чтобы начать использовать бандл, необходимо описать конфигурацию подключения к `RabbitMQ`.
 
 ```yaml
-# app/packages/wakeapp_rabbit_queue.yaml
-wakeapp_rabbit_queue:
+# app/packages/marfatech_rabbit_queue.yaml
+marfatech_rabbit_queue:
     connections:
         default:
             host: 'rabbitmq'              # хост для подключения к rabbitMQ
@@ -93,8 +96,8 @@ wakeapp_rabbit_queue:
             read_write_timeout: 3         # таймаут на чтение/запись
             heartbeat: 0                  # частота heartbeat
     consumer:
-      wait_timeout: 3                     # таймаут ожидания новых сообщений для обработки пачки в секундах (по умолчанию 3)
-      idle_timeout: 0                     # таймаут ожидания сообщений в пустой очереди в секундах (по умолчанию 0 - нет таймаута)
+        wait_timeout: 3                   # таймаут ожидания новых сообщений для обработки пачки в секундах (по умолчанию 3)
+        idle_timeout: 0                   # таймаут ожидания сообщений в пустой очереди в секундах (по умолчанию 0 - нет таймаута)
 ```
 
 Описание компонентов
@@ -109,7 +112,7 @@ wakeapp_rabbit_queue:
 $data = ['message' => 'example']; # Сообщение
 $options = ['key' => 'unique_key', 'delay' => 1000]; # Опции, в зависимости от типа очереди
 
-/** @var \Wakeapp\Bundle\RabbitQueueBundle\Producer\RabbitMqProducer $producer */
+/** @var \MarfaTech\Bundle\RabbitQueueBundle\Producer\RabbitMqProducer $producer */
 $producer->put('queue_name', $data, $options);
 ```
 
@@ -136,13 +139,13 @@ Router используется для создания разветвленно
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Publisher;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Publisher;
 
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueHeaderOptionEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueOptionEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Exception\RabbitQueueException;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueHeaderOptionEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueOptionEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\RabbitQueueException;
 
 use function is_int;
 use function sprintf;
@@ -198,7 +201,7 @@ declare(strict_types=1);
 
 namespace Acme\AppBundle\Consumer;
 
-use Wakeapp\Bundle\RabbitQueueBundle\Consumer\AbstractConsumer;
+use MarfaTech\Bundle\RabbitQueueBundle\Consumer\AbstractConsumer;
 
 class ExampleConsumer extends AbstractConsumer
 {
@@ -260,10 +263,10 @@ RabbitMQ позволяет создавать сложные схемы оче�
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Definition;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Definition;
 
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 class ExampleFifoDefinition implements DefinitionInterface
@@ -320,10 +323,10 @@ class ExampleFifoDefinition implements DefinitionInterface
 
 declare(strict_types=1);
 
-namespace Wakeapp\Bundle\RabbitQueueBundle\Definition;
+namespace MarfaTech\Bundle\RabbitQueueBundle\Definition;
 
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueEnum;
-use Wakeapp\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Exchange\AMQPExchangeType;
 use PhpAmqpLib\Wire\AMQPTable;
@@ -467,14 +470,14 @@ php bin/console rabbit:consumer:list
 [Пример создания Consumer](#consumer)
 
 Если в проекте не работает механизм `autowire`, то вам понадобится зарегистрировать `consumer`
-с тегом `wakeapp_rabbit_queue.consumer`:
+с тегом `marfatech_rabbit_queue.consumer`:
 
 ```yaml
 services:
     app.acme.consumer:
         class:      Acme\AppBundle\Consumer\ExampleConsumer
         tags:
-            - { name: wakeapp_rabbit_queue.consumer }
+            - { name: marfatech_rabbit_queue.consumer }
 ```
 
 ### Шаг 3: Загрузка схем очередей RabbitMQ
