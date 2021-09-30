@@ -76,6 +76,7 @@ class UpdateDefinitionCommand extends Command
         }
 
         $successLoop = true;
+
         while ($successLoop && !empty($routersToInit)) {
             $successLoop = false;
 
@@ -92,7 +93,6 @@ class UpdateDefinitionCommand extends Command
         if (!$successLoop) {
             throw new RouteStructureException('Router definitions have cyclic dependencies');
         }
-
 
         foreach ($this->definitionList as $definition) {
             if ($definition->getQueueType() & QueueTypeEnum::ROUTER) {
