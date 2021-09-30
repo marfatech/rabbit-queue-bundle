@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MarfaTech\Bundle\RabbitQueueBundle\Command;
 
-use MarfaTech\Bundle\RabbitQueueBundle\Exception\DefinitionNotFoundException;
 use MarfaTech\Bundle\RabbitQueueBundle\Registry\ConsumerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -30,7 +29,7 @@ class ConsumerListCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Shows all registered consumers')
@@ -40,8 +39,6 @@ class ConsumerListCommand extends Command
 
     /**
      * {@inheritdoc}
-     *
-     * @throws DefinitionNotFoundException
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

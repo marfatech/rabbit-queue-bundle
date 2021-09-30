@@ -18,6 +18,9 @@ class DeduplicateDelayPublisher extends AbstractPublisher
 {
     public const QUEUE_TYPE = QueueTypeEnum::FIFO | QueueTypeEnum::DELAY | QueueTypeEnum::DEDUPLICATE;
 
+    /**
+     * @throws RabbitQueueException
+     */
     protected function prepareOptions(DefinitionInterface $definition, array $options): array
     {
         $key = $options[QueueOptionEnum::KEY] ?? null;

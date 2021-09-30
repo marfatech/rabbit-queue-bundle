@@ -7,6 +7,9 @@ namespace MarfaTech\Bundle\RabbitQueueBundle\Tests\Producer;
 use MarfaTech\Bundle\RabbitQueueBundle\Definition\ExampleDefinition;
 use MarfaTech\Bundle\RabbitQueueBundle\Definition\ExampleFifoDefinition;
 use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\DefinitionNotFoundException;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\HydratorNotFoundException;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\RabbitQueueException;
 use MarfaTech\Bundle\RabbitQueueBundle\Hydrator\JsonHydrator;
 use MarfaTech\Bundle\RabbitQueueBundle\Producer\RabbitMqProducer;
 use MarfaTech\Bundle\RabbitQueueBundle\Registry\DefinitionRegistry;
@@ -43,6 +46,11 @@ class RabbitMqProducerTest extends TestCase
         $this->producer = new RabbitMqProducer($definitionRegistry, $hydratorRegistry, $publisherRegistry, JsonHydrator::KEY);
     }
 
+    /**
+     * @throws HydratorNotFoundException
+     * @throws DefinitionNotFoundException
+     * @throws RabbitQueueException
+     */
     public function testPut(): void
     {
         $this->producer->put(QueueEnum::EXAMPLE_FIFO, self::TEST_MESSAGE);

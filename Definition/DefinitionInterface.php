@@ -18,7 +18,7 @@ interface DefinitionInterface
     public function init(AMQPStreamConnection $connection);
 
     /**
-     * Get queue name or exchange name which is a entry point for to handle message
+     * Get queue name or exchange name which is an entry point for to handle message
      */
     public function getEntryPointName(): string;
 

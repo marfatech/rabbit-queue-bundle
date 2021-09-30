@@ -6,6 +6,8 @@ namespace MarfaTech\Bundle\RabbitQueueBundle\Command;
 
 use MarfaTech\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
 use MarfaTech\Bundle\RabbitQueueBundle\Enum\ExchangeEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\RouteStructureException;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Exchange\AMQPExchangeType;
 use PhpAmqpLib\Wire\AMQPTable;
@@ -54,10 +56,49 @@ class UpdateDefinitionCommand extends Command
 
     /**
      * {@inheritDoc}
+     *
+     * @throws RouteStructureException
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $routersToInit = [];
+        $initializedRouters = [];
+
         foreach ($this->definitionList as $definition) {
+            if ($definition->getQueueType() & QueueTypeEnum::ROUTER) {
+                if (method_exists($definition, 'dependsOn') && !empty($definition->dependsOn())) {
+                    $routersToInit[$definition::getQueueName()] = $definition;
+                } else {
+                    $definition->init($this->connection);
+                    $initializedRouters[] = $definition::getQueueName();
+                }
+            }
+        }
+
+        $successLoop = true;
+
+        while ($successLoop && !empty($routersToInit)) {
+            $successLoop = false;
+
+            foreach ($routersToInit as $router) {
+                if (empty(array_diff($router->dependsOn(), $initializedRouters))) {
+                    $successLoop = true;
+                    $router->init($this->connection);
+                    unset($routersToInit[$router::getQueueName()]);
+                    $initializedRouters[] = $router::getQueueName();
+                }
+            }
+        }
+
+        if (!$successLoop) {
+            throw new RouteStructureException('Router definitions have cyclic dependencies');
+        }
+
+        foreach ($this->definitionList as $definition) {
+            if ($definition->getQueueType() & QueueTypeEnum::ROUTER) {
+                continue;
+            }
+
             $definition->init($this->connection);
 
             $this->bindRetryExchange($definition);

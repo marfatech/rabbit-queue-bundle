@@ -1,4 +1,6 @@
 ## [Unreleased]
+### Added
+- `RouterPublisher` added for using `direct` and `topic` RabbitMQ exchanges with routing key.
 ### Changed
 - [BC BREAK] Refactoring namespace to `MarfaTech`.
 - [BC BREAK] Renamed root config `wakeapp_rabbit_queue` to `marfatech_rabbit_queue`.

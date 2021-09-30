@@ -17,6 +17,9 @@ class DelayPublisher extends AbstractPublisher
 {
     public const QUEUE_TYPE = QueueTypeEnum::FIFO | QueueTypeEnum::DELAY;
 
+    /**
+     * @throws RabbitQueueException
+     */
     protected function prepareOptions(DefinitionInterface $definition, array $options): array
     {
         $delay = $options[QueueOptionEnum::DELAY] ?? null;

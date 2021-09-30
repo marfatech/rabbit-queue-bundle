@@ -4,22 +4,17 @@ declare(strict_types=1);
 
 namespace MarfaTech\Bundle\RabbitQueueBundle\Tests\Publisher;
 
+use PhpAmqpLib\Message\AMQPMessage;
 use MarfaTech\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
 use MarfaTech\Bundle\RabbitQueueBundle\Enum\QueueTypeEnum;
-use MarfaTech\Bundle\RabbitQueueBundle\Exception\HydratorNotFoundException;
 use MarfaTech\Bundle\RabbitQueueBundle\Hydrator\JsonHydrator;
-use MarfaTech\Bundle\RabbitQueueBundle\Publisher\DeduplicatePublisher;
+use MarfaTech\Bundle\RabbitQueueBundle\Publisher\RouterPublisher;
 use MarfaTech\Bundle\RabbitQueueBundle\Tests\TestCase\AbstractTestCase;
-use PhpAmqpLib\Message\AMQPMessage;
 
-class DeduplicatePublisherTest extends AbstractTestCase
+class RouterPublisherTest extends AbstractTestCase
 {
-    public const TEST_OPTIONS = ['key' => 'test'];
-    public const QUEUE_TYPE = QueueTypeEnum::FIFO | QueueTypeEnum::DEDUPLICATE;
+    public const QUEUE_TYPE = QueueTypeEnum::ROUTER;
 
-    /**
-     * @throws HydratorNotFoundException
-     */
     public function testPublish(): void
     {
         $definition = $this->createDefinitionMock(self::TEST_QUEUE_NAME, self::TEST_EXCHANGE, self::QUEUE_TYPE);
@@ -28,19 +23,16 @@ class DeduplicatePublisherTest extends AbstractTestCase
         $client = $this->createMock(RabbitMqClient::class);
         $client->expects(self::once())
             ->method('publish')
-            ->with(self::isInstanceOf(AMQPMessage::class), '', self::TEST_QUEUE_NAME)
+            ->with(self::isInstanceOf(AMQPMessage::class), self::TEST_EXCHANGE, self::TEST_QUEUE_NAME)
         ;
 
-        $publisher = new DeduplicatePublisher($client, $hydratorRegistry, JsonHydrator::KEY);
+        $publisher = new RouterPublisher($client, $hydratorRegistry, JsonHydrator::KEY);
 
-        $publisher->publish($definition, self::TEST_MESSAGE, self::TEST_OPTIONS);
+        $publisher->publish($definition, self::TEST_MESSAGE);
 
         self::assertTrue(true);
     }
 
-    /**
-     * @throws HydratorNotFoundException
-     */
     public function testPublishWithRouting(): void
     {
         $definition = $this->createDefinitionMock(self::TEST_QUEUE_NAME, self::TEST_EXCHANGE, self::QUEUE_TYPE);
@@ -49,12 +41,12 @@ class DeduplicatePublisherTest extends AbstractTestCase
         $client = $this->createMock(RabbitMqClient::class);
         $client->expects(self::once())
             ->method('publish')
-            ->with(self::isInstanceOf(AMQPMessage::class), '', self::TEST_ROUTING)
+            ->with(self::isInstanceOf(AMQPMessage::class), self::TEST_EXCHANGE, self::TEST_ROUTING)
         ;
 
-        $publisher = new DeduplicatePublisher($client, $hydratorRegistry, JsonHydrator::KEY);
+        $publisher = new RouterPublisher($client, $hydratorRegistry, JsonHydrator::KEY);
 
-        $publisher->publish($definition, self::TEST_MESSAGE, self::TEST_OPTIONS, self::TEST_ROUTING);
+        $publisher->publish($definition, self::TEST_MESSAGE, [], self::TEST_ROUTING);
 
         self::assertTrue(true);
     }

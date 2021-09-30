@@ -66,6 +66,11 @@ services:
         tags:
             - { name: !php/const MarfaTech\Bundle\RabbitQueueBundle\Publisher\PublisherInterface::TAG, default_index_method: 'getQueueType' }
 
+    MarfaTech\Bundle\RabbitQueueBundle\Publisher\RouterPublisher:
+        parent: 'MarfaTech\Bundle\RabbitQueueBundle\Publisher\AbstractPublisher'
+        tags:
+            - { name: !php/const MarfaTech\Bundle\RabbitQueueBundle\Publisher\PublisherInterface::TAG, default_index_method: 'getQueueType' }
+
     MarfaTech\Bundle\RabbitQueueBundle\Producer\RabbitMqProducer:
         arguments:
             - '@MarfaTech\Bundle\RabbitQueueBundle\Registry\DefinitionRegistry'

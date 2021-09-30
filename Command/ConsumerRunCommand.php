@@ -10,6 +10,7 @@ use MarfaTech\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
 use MarfaTech\Bundle\RabbitQueueBundle\Consumer\ConsumerInterface;
 use MarfaTech\Bundle\RabbitQueueBundle\Exception\ConsumerNotFoundException;
 use MarfaTech\Bundle\RabbitQueueBundle\Exception\ConsumerSilentException;
+use MarfaTech\Bundle\RabbitQueueBundle\Exception\DefinitionNotFoundException;
 use MarfaTech\Bundle\RabbitQueueBundle\Exception\ReleasePartialException;
 use MarfaTech\Bundle\RabbitQueueBundle\Exception\RewindDelayPartialException;
 use MarfaTech\Bundle\RabbitQueueBundle\Exception\RewindPartialException;
@@ -143,6 +144,9 @@ class ConsumerRunCommand extends Command
         return 0;
     }
 
+    /**
+     * @throws DefinitionNotFoundException
+     */
     protected function batchConsume(ConsumerInterface $consumer, array &$messageList): void
     {
         try {

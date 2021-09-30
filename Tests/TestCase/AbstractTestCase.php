@@ -15,6 +15,7 @@ class AbstractTestCase extends TestCase
     protected const TEST_MESSAGE = '{"test": "test"}';
     protected const TEST_EXCHANGE = 'test_exchange';
     protected const TEST_QUEUE_NAME = 'test_queue';
+    protected const TEST_ROUTING = 'test.routing';
 
     public function createDefinitionMock(string $queueName, string $entryPointName, int $queueType): DefinitionInterface
     {
@@ -30,7 +31,7 @@ class AbstractTestCase extends TestCase
                 self::$queueName = $queueName;
             }
 
-            public function init(AMQPStreamConnection $connection)
+            public function init(AMQPStreamConnection $connection): void
             {
             }
 
