@@ -38,7 +38,7 @@ abstract class AbstractPublisher implements PublisherInterface
     public function publish(
         DefinitionInterface $definition,
         string $dataString,
-        array $headers = [],
+        array $options = [],
         ?string $routingKey = null,
         array $properties = []
     ): void {
@@ -52,7 +52,7 @@ abstract class AbstractPublisher implements PublisherInterface
 
         $message = new AMQPMessage($dataString, array_merge($defaultProperties, $properties));
 
-        $amqpTableOptions = $this->prepareOptions($definition, $headers);
+        $amqpTableOptions = $this->prepareOptions($definition, $options);
 
         if (!empty($amqpTableOptions)) {
             $message->set('application_headers', new AMQPTable($amqpTableOptions));

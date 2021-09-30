@@ -11,7 +11,7 @@ interface PublisherInterface
     public function publish(
         DefinitionInterface $definition,
         string $dataString,
-        array $headers = [],
+        array $options = [],
         ?string $routingKey = null,
         array $properties = []
     ): void;
