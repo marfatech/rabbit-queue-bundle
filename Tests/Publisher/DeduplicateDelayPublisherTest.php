@@ -15,6 +15,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 class DeduplicateDelayPublisherTest extends AbstractTestCase
 {
     private const TEST_OPTIONS = ['delay' => 10, 'key' => 'unique_key'];
+    private const TEST_PARAMS = ['type' => 'test'];
     private const QUEUE_TYPE = QueueTypeEnum::FIFO | QueueTypeEnum::DELAY | QueueTypeEnum::DEDUPLICATE;
 
     public function testPublish(): void
@@ -30,7 +31,7 @@ class DeduplicateDelayPublisherTest extends AbstractTestCase
 
         $publisher = new DeduplicateDelayPublisher($client, $hydratorRegistry, JsonHydrator::KEY);
 
-        $publisher->publish($definition, self::TEST_MESSAGE, self::TEST_OPTIONS);
+        $publisher->publish($definition, self::TEST_MESSAGE, self::TEST_OPTIONS, null, self::TEST_PARAMS);
 
         self::assertTrue(true);
     }

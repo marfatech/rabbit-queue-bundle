@@ -35,8 +35,13 @@ class RabbitMqProducer implements RabbitMqProducerInterface
      * @throws DefinitionNotFoundException
      * @throws HydratorNotFoundException
      */
-    public function put(string $queueName, $data, array $options = [], string $routingKey = ''): void
-    {
+    public function put(
+        string $queueName,
+        $data,
+        array $options = [],
+        ?string $routingKey = null,
+        array $properties = []
+    ): void {
         $dataString = $this->hydratorRegistry->getHydrator($this->hydratorName)->dehydrate($data);
 
         $definition = $this->definitionRegistry->getDefinition($queueName);
@@ -44,6 +49,6 @@ class RabbitMqProducer implements RabbitMqProducerInterface
 
         $publisher = $this->publisherRegistry->getPublisher($queueType);
 
-        $publisher->publish($definition, $dataString, $options, $routingKey);
+        $publisher->publish($definition, $dataString, $options, $routingKey, $properties);
     }
 }

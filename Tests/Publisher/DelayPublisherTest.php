@@ -14,8 +14,9 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 class DelayPublisherTest extends AbstractTestCase
 {
-    public const TEST_OPTIONS = ['delay' => 10];
-    public const QUEUE_TYPE = QueueTypeEnum::FIFO | QueueTypeEnum::DELAY;
+    private const TEST_OPTIONS = ['delay' => 10];
+    private const TEST_PARAMS = ['type' => 'test'];
+    private const QUEUE_TYPE = QueueTypeEnum::FIFO | QueueTypeEnum::DELAY;
 
     public function testPublish(): void
     {
@@ -30,7 +31,7 @@ class DelayPublisherTest extends AbstractTestCase
 
         $publisher = new DelayPublisher($client, $hydratorRegistry, JsonHydrator::KEY);
 
-        $publisher->publish($definition, self::TEST_MESSAGE, self::TEST_OPTIONS);
+        $publisher->publish($definition, self::TEST_MESSAGE, self::TEST_OPTIONS, null, self::TEST_PARAMS);
 
         self::assertTrue(true);
     }

@@ -14,8 +14,9 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 class DeduplicatePublisherTest extends AbstractTestCase
 {
-    public const TEST_OPTIONS = ['key' => 'test'];
-    public const QUEUE_TYPE = QueueTypeEnum::FIFO | QueueTypeEnum::DEDUPLICATE;
+    private const TEST_OPTIONS = ['key' => 'test'];
+    private const TEST_PARAMS = ['type' => 'test'];
+    private const QUEUE_TYPE = QueueTypeEnum::FIFO | QueueTypeEnum::DEDUPLICATE;
 
     /**
      * @throws HydratorNotFoundException
@@ -33,7 +34,7 @@ class DeduplicatePublisherTest extends AbstractTestCase
 
         $publisher = new DeduplicatePublisher($client, $hydratorRegistry, JsonHydrator::KEY);
 
-        $publisher->publish($definition, self::TEST_MESSAGE, self::TEST_OPTIONS);
+        $publisher->publish($definition, self::TEST_MESSAGE, self::TEST_OPTIONS, null, self::TEST_PARAMS);
 
         self::assertTrue(true);
     }

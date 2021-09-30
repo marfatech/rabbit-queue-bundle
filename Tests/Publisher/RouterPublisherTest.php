@@ -13,7 +13,8 @@ use MarfaTech\Bundle\RabbitQueueBundle\Tests\TestCase\AbstractTestCase;
 
 class RouterPublisherTest extends AbstractTestCase
 {
-    public const QUEUE_TYPE = QueueTypeEnum::ROUTER;
+    private const TEST_PARAMS = ['type' => 'test'];
+    private const QUEUE_TYPE = QueueTypeEnum::ROUTER;
 
     public function testPublish(): void
     {
@@ -28,7 +29,7 @@ class RouterPublisherTest extends AbstractTestCase
 
         $publisher = new RouterPublisher($client, $hydratorRegistry, JsonHydrator::KEY);
 
-        $publisher->publish($definition, self::TEST_MESSAGE);
+        $publisher->publish($definition, self::TEST_MESSAGE, [], null, self::TEST_PARAMS);
 
         self::assertTrue(true);
     }
