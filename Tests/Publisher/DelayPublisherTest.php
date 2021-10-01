@@ -15,7 +15,6 @@ use PhpAmqpLib\Message\AMQPMessage;
 class DelayPublisherTest extends AbstractTestCase
 {
     protected const TEST_OPTIONS = ['delay' => 10];
-    protected const TEST_PARAMS = ['type' => 'test'];
     protected const QUEUE_TYPE = QueueTypeEnum::FIFO | QueueTypeEnum::DELAY;
 
     public function testPublish(): void

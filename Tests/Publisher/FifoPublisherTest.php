@@ -13,7 +13,6 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 class FifoPublisherTest extends AbstractTestCase
 {
-    protected const TEST_PARAMS = ['type' => 'test'];
     protected const QUEUE_TYPE = QueueTypeEnum::FIFO;
 
     public function testPublish(): void

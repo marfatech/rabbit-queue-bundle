@@ -15,7 +15,6 @@ use PhpAmqpLib\Message\AMQPMessage;
 class DeduplicatePublisherTest extends AbstractTestCase
 {
     protected const TEST_OPTIONS = ['key' => 'test'];
-    protected const TEST_PARAMS = ['type' => 'test'];
     protected const QUEUE_TYPE = QueueTypeEnum::FIFO | QueueTypeEnum::DEDUPLICATE;
 
     /**

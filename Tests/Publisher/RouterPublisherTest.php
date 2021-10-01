@@ -13,7 +13,6 @@ use MarfaTech\Bundle\RabbitQueueBundle\Tests\TestCase\AbstractTestCase;
 
 class RouterPublisherTest extends AbstractTestCase
 {
-    protected const TEST_PARAMS = ['type' => 'test'];
     protected const QUEUE_TYPE = QueueTypeEnum::ROUTER;
 
     public function testPublish(): void

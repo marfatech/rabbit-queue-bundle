@@ -16,6 +16,7 @@ use function array_diff;
 
 class AbstractTestCase extends TestCase
 {
+    protected const TEST_PARAMS = ['type' => 'test'];
     protected const TEST_MESSAGE = '{"test": "test"}';
     protected const TEST_EXCHANGE = 'test_exchange';
     protected const TEST_QUEUE_NAME = 'test_queue';

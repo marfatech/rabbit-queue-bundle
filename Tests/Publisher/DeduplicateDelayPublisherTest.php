@@ -15,7 +15,6 @@ use PhpAmqpLib\Message\AMQPMessage;
 class DeduplicateDelayPublisherTest extends AbstractTestCase
 {
     protected const TEST_OPTIONS = ['delay' => 10, 'key' => 'unique_key'];
-    protected const TEST_PARAMS = ['type' => 'test'];
     protected const QUEUE_TYPE = QueueTypeEnum::FIFO | QueueTypeEnum::DELAY | QueueTypeEnum::DEDUPLICATE;
 
     public function testPublish(): void
