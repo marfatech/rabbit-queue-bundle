@@ -13,7 +13,7 @@ use MarfaTech\Bundle\RabbitQueueBundle\Tests\TestCase\AbstractTestCase;
 
 class RouterPublisherTest extends AbstractTestCase
 {
-    public const QUEUE_TYPE = QueueTypeEnum::ROUTER;
+    protected const QUEUE_TYPE = QueueTypeEnum::ROUTER;
 
     public function testPublish(): void
     {
@@ -23,12 +23,12 @@ class RouterPublisherTest extends AbstractTestCase
         $client = $this->createMock(RabbitMqClient::class);
         $client->expects(self::once())
             ->method('publish')
-            ->with(self::isInstanceOf(AMQPMessage::class), self::TEST_EXCHANGE, self::TEST_QUEUE_NAME)
+            ->with(self::getAmqpMockCallback(), self::TEST_EXCHANGE, self::TEST_QUEUE_NAME)
         ;
 
         $publisher = new RouterPublisher($client, $hydratorRegistry, JsonHydrator::KEY);
 
-        $publisher->publish($definition, self::TEST_MESSAGE);
+        $publisher->publish($definition, self::TEST_MESSAGE, [], null, self::TEST_PARAMS);
 
         self::assertTrue(true);
     }

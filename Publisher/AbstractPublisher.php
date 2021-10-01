@@ -12,6 +12,8 @@ use MarfaTech\Bundle\RabbitQueueBundle\Registry\HydratorRegistry;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPTable;
 
+use function array_merge;
+
 abstract class AbstractPublisher implements PublisherInterface
 {
     public const QUEUE_TYPE = QueueTypeEnum::FIFO;
@@ -33,15 +35,22 @@ abstract class AbstractPublisher implements PublisherInterface
     /**
      * @throws HydratorNotFoundException
      */
-    public function publish(DefinitionInterface $definition, string $dataString, array $options = [], string $routingKey = ''): void
-    {
+    public function publish(
+        DefinitionInterface $definition,
+        string $dataString,
+        array $options = [],
+        ?string $routingKey = null,
+        array $properties = []
+    ): void {
         $exchangeName = $this->getDefinitionExchangeName($definition);
-        $route = $routingKey !== '' ? $routingKey : $this->getDefinitionQueueName($definition);
+        $route = !empty($routingKey) ? $routingKey : $this->getDefinitionQueueName($definition);
 
-        $message = new AMQPMessage($dataString, [
+        $defaultProperties = [
             'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT,
             'content_type' => $this->hydratorRegistry->getHydrator($this->hydratorName)::getKey(),
-        ]);
+        ];
+
+        $message = new AMQPMessage($dataString, array_merge($defaultProperties, $properties));
 
         $amqpTableOptions = $this->prepareOptions($definition, $options);
 

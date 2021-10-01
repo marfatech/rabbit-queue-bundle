@@ -1,6 +1,8 @@
 ## [Unreleased]
 ### Added
 - `RouterPublisher` added for using `direct` and `topic` RabbitMQ exchanges with routing key.
+- Added ability to send `routingKey` and `properties` with `RabbitMQProducer`.
+
 ### Changed
 - [BC BREAK] Refactoring namespace to `MarfaTech`.
 - [BC BREAK] Renamed root config `wakeapp_rabbit_queue` to `marfatech_rabbit_queue`.
@@ -17,6 +19,8 @@
 - [BC BREAK] Renamed parameter `wakeapp_rabbit_queue.connection.heartbeat` to `marfatech_rabbit_queue.connection.heartbeat`.
 - [BC BREAK] Renamed parameter `wakeapp_rabbit_queue.consumer.idle_timeout` to `marfatech_rabbit_queue.consumer.idle_timeout`.
 - [BC BREAK] Renamed parameter `wakeapp_rabbit_queue.consumer.wait_timeout` to `marfatech_rabbit_queue.consumer.wait_timeout`.
+- [BC BREAK] Changed interface `RabbitmqProducerInterface::put` added parameter `routingKey` and `properties`.
+- [BC BREAK] Changed interface `PublisherInterface::publish` added parameter `routingKey` and `properties`.
 
 ## [2.1.2] - 2021-07-15
 ### Changed

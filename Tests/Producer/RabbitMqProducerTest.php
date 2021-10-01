@@ -20,6 +20,8 @@ use PHPUnit\Framework\TestCase;
 class RabbitMqProducerTest extends TestCase
 {
     private const TEST_MESSAGE = ['message' => 'test'];
+    private const TEST_OPTIONS = ['delay' => 10, 'key' => 'unique_key'];
+    private const TEST_PARAMS = ['type' => 'test'];
 
     private RabbitMqProducer $producer;
 
@@ -53,7 +55,7 @@ class RabbitMqProducerTest extends TestCase
      */
     public function testPut(): void
     {
-        $this->producer->put(QueueEnum::EXAMPLE_FIFO, self::TEST_MESSAGE);
+        $this->producer->put(QueueEnum::EXAMPLE_FIFO, self::TEST_MESSAGE, self::TEST_OPTIONS, null, self::TEST_PARAMS);
 
         self::assertTrue(true);
     }

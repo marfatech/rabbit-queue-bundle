@@ -8,10 +8,15 @@ use MarfaTech\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
 use MarfaTech\Bundle\RabbitQueueBundle\Hydrator\JsonHydrator;
 use MarfaTech\Bundle\RabbitQueueBundle\Registry\HydratorRegistry;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
+use PHPUnit\Framework\Constraint\Callback;
 use PHPUnit\Framework\TestCase;
+
+use function array_diff;
 
 class AbstractTestCase extends TestCase
 {
+    protected const TEST_PARAMS = ['type' => 'test'];
     protected const TEST_MESSAGE = '{"test": "test"}';
     protected const TEST_EXCHANGE = 'test_exchange';
     protected const TEST_QUEUE_NAME = 'test_queue';
@@ -62,5 +67,14 @@ class AbstractTestCase extends TestCase
         ;
 
         return $hydratorRegistry;
+    }
+
+    protected static function getAmqpMockCallback(): Callback
+    {
+        return self::callback(static function ($value) {
+            $isAmqpMessage = $value instanceof AMQPMessage;
+
+            return $isAmqpMessage && empty(array_diff(static::TEST_PARAMS, $value->get_properties()));
+        });
     }
 }

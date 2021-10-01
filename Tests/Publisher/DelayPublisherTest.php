@@ -14,8 +14,8 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 class DelayPublisherTest extends AbstractTestCase
 {
-    public const TEST_OPTIONS = ['delay' => 10];
-    public const QUEUE_TYPE = QueueTypeEnum::FIFO | QueueTypeEnum::DELAY;
+    protected const TEST_OPTIONS = ['delay' => 10];
+    protected const QUEUE_TYPE = QueueTypeEnum::FIFO | QueueTypeEnum::DELAY;
 
     public function testPublish(): void
     {
@@ -25,12 +25,12 @@ class DelayPublisherTest extends AbstractTestCase
         $client = $this->createMock(RabbitMqClient::class);
         $client->expects(self::once())
             ->method('publish')
-            ->with(self::isInstanceOf(AMQPMessage::class), self::TEST_EXCHANGE, '')
+            ->with(self::getAmqpMockCallback(), self::TEST_EXCHANGE, '')
         ;
 
         $publisher = new DelayPublisher($client, $hydratorRegistry, JsonHydrator::KEY);
 
-        $publisher->publish($definition, self::TEST_MESSAGE, self::TEST_OPTIONS);
+        $publisher->publish($definition, self::TEST_MESSAGE, self::TEST_OPTIONS, null, self::TEST_PARAMS);
 
         self::assertTrue(true);
     }

@@ -14,8 +14,8 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 class DeduplicateDelayPublisherTest extends AbstractTestCase
 {
-    private const TEST_OPTIONS = ['delay' => 10, 'key' => 'unique_key'];
-    private const QUEUE_TYPE = QueueTypeEnum::FIFO | QueueTypeEnum::DELAY | QueueTypeEnum::DEDUPLICATE;
+    protected const TEST_OPTIONS = ['delay' => 10, 'key' => 'unique_key'];
+    protected const QUEUE_TYPE = QueueTypeEnum::FIFO | QueueTypeEnum::DELAY | QueueTypeEnum::DEDUPLICATE;
 
     public function testPublish(): void
     {
@@ -25,12 +25,12 @@ class DeduplicateDelayPublisherTest extends AbstractTestCase
         $client = $this->createMock(RabbitMqClient::class);
         $client->expects(self::once())
             ->method('publish')
-            ->with(self::isInstanceOf(AMQPMessage::class), self::TEST_EXCHANGE, '')
+            ->with(self::getAmqpMockCallback(), self::TEST_EXCHANGE, '')
         ;
 
         $publisher = new DeduplicateDelayPublisher($client, $hydratorRegistry, JsonHydrator::KEY);
 
-        $publisher->publish($definition, self::TEST_MESSAGE, self::TEST_OPTIONS);
+        $publisher->publish($definition, self::TEST_MESSAGE, self::TEST_OPTIONS, null, self::TEST_PARAMS);
 
         self::assertTrue(true);
     }

@@ -111,9 +111,11 @@ marfatech_rabbit_queue:
 <?php
 $data = ['message' => 'example']; # Сообщение
 $options = ['key' => 'unique_key', 'delay' => 1000]; # Опции, в зависимости от типа очереди
+$routingKey = 'test.routing.key'; # Ключ маршрутизации сообщения, для очередей с типом `ROUTER`
+$properties = ['type' => 'test']; # Дополнительные свойства сообщения AMQPMessage
 
 /** @var \MarfaTech\Bundle\RabbitQueueBundle\Producer\RabbitMqProducer $producer */
-$producer->put('queue_name', $data, $options);
+$producer->put('queue_name', $data, $options, $routingKey, $properties);
 ```
 
 ### Publisher
