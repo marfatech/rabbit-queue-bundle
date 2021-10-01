@@ -13,8 +13,8 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 class FifoPublisherTest extends AbstractTestCase
 {
-    private const TEST_PARAMS = ['type' => 'test'];
-    private const QUEUE_TYPE = QueueTypeEnum::FIFO;
+    protected const TEST_PARAMS = ['type' => 'test'];
+    protected const QUEUE_TYPE = QueueTypeEnum::FIFO;
 
     public function testPublish(): void
     {
@@ -24,7 +24,7 @@ class FifoPublisherTest extends AbstractTestCase
         $client = $this->createMock(RabbitMqClient::class);
         $client->expects(self::once())
             ->method('publish')
-            ->with(self::isInstanceOf(AMQPMessage::class), '', self::TEST_QUEUE_NAME)
+            ->with(self::getAmqpMockCallback(), '', self::TEST_QUEUE_NAME)
         ;
 
         $publisher = new FifoPublisher($client, $hydratorRegistry, JsonHydrator::KEY);
