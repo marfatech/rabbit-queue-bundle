@@ -1,4 +1,6 @@
 ## [Unreleased]
+
+## [3.0.0] - 2021-10-01
 ### Added
 - `RouterPublisher` added for using `direct` and `topic` RabbitMQ exchanges with routing key.
 - Added ability to send `routingKey` and `properties` with `RabbitMQProducer`.
