@@ -1,4 +1,6 @@
 ## [Unreleased]
+### Added
+- Symfony 6 support
 
 ## [3.0.0] - 2021-10-01
 ### Added
