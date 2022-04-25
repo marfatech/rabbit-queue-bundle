@@ -1,6 +1,9 @@
 ## [Unreleased]
 ### Added
 - Symfony 6 support
+### Changed
+- Updated `php` with pattern version `~8.0`.
+- Updated `symfony/*` with pattern version `~4.4||~5.4||~6.0`.
 
 ## [3.0.0] - 2021-10-01
 ### Added
