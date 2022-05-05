@@ -125,15 +125,20 @@ class ConsumerRunCommand extends Command
             $messageList[$message->getDeliveryTag()] = $message;
         });
 
+        $batchTime = 0;
+
         while ($this->client->isConsuming()) {
-            if (count($messageList) === $batchSize) {
+            if (count($messageList) === $batchSize || $batchTime >= $this->getBatchTimeout()) {
                 $this->batchConsume($consumer, $messageList);
+                $batchTime = 0;
             }
 
             $timeout = empty($messageList) ? $this->getIdleTimeout() : $this->getWaitTimeout();
+            $timeStart = microtime(true);
 
             try {
                 $this->client->wait($timeout);
+                $batchTime += microtime(true) - $timeStart;
             } catch (AMQPTimeoutException $e) {
                 if (!empty($messageList)) {
                     $this->batchConsume($consumer, $messageList);
@@ -230,5 +235,10 @@ class ConsumerRunCommand extends Command
     private function getWaitTimeout(): int
     {
         return $this->parameterBag->get('marfatech_rabbit_queue.consumer.wait_timeout');
+    }
+
+    private function getBatchTimeout(): int
+    {
+        return $this->parameterBag->get('marfatech_rabbit_queue.consumer.batch_timeout');
     }
 }
