@@ -50,6 +50,8 @@ class ConsumerRunCommand extends Command
     private ParameterBagInterface $parameterBag;
     private ?LoggerInterface $logger;
 
+    private float $batchTime = 0;
+
     public function dependencyInjection(
         ConsumerRegistry $consumerRegistry,
         RabbitMqClient $client,
@@ -125,12 +127,9 @@ class ConsumerRunCommand extends Command
             $messageList[$message->getDeliveryTag()] = $message;
         });
 
-        $batchTime = 0;
-
         while ($this->client->isConsuming()) {
-            if (count($messageList) === $batchSize || $batchTime >= $this->getBatchTimeout()) {
+            if (count($messageList) === $batchSize || $this->batchTime >= $this->getBatchTimeout()) {
                 $this->batchConsume($consumer, $messageList);
-                $batchTime = 0;
             }
 
             $timeout = empty($messageList) ? $this->getIdleTimeout() : $this->getWaitTimeout();
@@ -138,7 +137,7 @@ class ConsumerRunCommand extends Command
 
             try {
                 $this->client->wait($timeout);
-                $batchTime += microtime(true) - $timeStart;
+                $this->batchTime += microtime(true) - $timeStart;
             } catch (AMQPTimeoutException $e) {
                 if (!empty($messageList)) {
                     $this->batchConsume($consumer, $messageList);
@@ -202,6 +201,8 @@ class ConsumerRunCommand extends Command
             throw $exception;
         } finally {
             $messageList = [];
+
+            $this->batchTime = 0;
 
             if ($consumer->isPropagationStopped()) {
                 $this->logger->info('Consumer has been propagation stopped forcibly');

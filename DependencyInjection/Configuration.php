@@ -47,7 +47,7 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue(3)
                         ->end()
                         ->integerNode('batch_timeout')
-                            ->defaultValue(10)
+                            ->defaultValue(0)
                         ->end()
                     ->end()
                 ->end()
