@@ -128,7 +128,10 @@ class ConsumerRunCommand extends Command
         });
 
         while ($this->client->isConsuming()) {
-            if (count($messageList) === $batchSize || $this->batchTime >= $this->getBatchTimeout()) {
+            if (
+                count($messageList) === $batchSize ||
+                ($this->getBatchTimeout() > 0 && $this->batchTime >= $this->getBatchTimeout())
+            ) {
                 $this->batchConsume($consumer, $messageList);
             }
 
