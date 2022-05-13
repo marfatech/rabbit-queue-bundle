@@ -1,8 +1,6 @@
 ## [Unreleased]
-
-## [3.0.1] - 2022-05-05
 ### Added
-- Added config parameter `batch_timeout`.
+- Added config parameter `marfatech_rabbit_queue.consumer.batch_timeout`.
 
 ## [3.0.0] - 2021-10-01
 ### Added

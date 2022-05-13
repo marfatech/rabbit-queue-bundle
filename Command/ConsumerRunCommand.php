@@ -50,8 +50,6 @@ class ConsumerRunCommand extends Command
     private ParameterBagInterface $parameterBag;
     private ?LoggerInterface $logger;
 
-    private float $batchTime = 0;
-
     public function dependencyInjection(
         ConsumerRegistry $consumerRegistry,
         RabbitMqClient $client,
@@ -119,6 +117,7 @@ class ConsumerRunCommand extends Command
         $consumer = $this->consumerRegistry->getConsumer($name);
         $queueName = $consumer->getBindQueueName();
         $batchSize = $consumer->getBatchSize();
+        $batchTime = 0;
 
         $messageList = [];
 
@@ -128,11 +127,12 @@ class ConsumerRunCommand extends Command
         });
 
         while ($this->client->isConsuming()) {
-            if (
-                count($messageList) === $batchSize ||
-                ($this->getBatchTimeout() > 0 && $this->batchTime >= $this->getBatchTimeout())
-            ) {
+            $isBatchAccumulated = count($messageList) === $batchSize;
+            $isBatchTimeout = $this->getBatchTimeout() > 0 && $batchTime >= $this->getBatchTimeout();
+
+            if ($isBatchAccumulated || $isBatchTimeout) {
                 $this->batchConsume($consumer, $messageList);
+                $batchTime = 0;
             }
 
             $timeout = empty($messageList) ? $this->getIdleTimeout() : $this->getWaitTimeout();
@@ -140,10 +140,11 @@ class ConsumerRunCommand extends Command
 
             try {
                 $this->client->wait($timeout);
-                $this->batchTime += microtime(true) - $timeStart;
+                $batchTime += microtime(true) - $timeStart;
             } catch (AMQPTimeoutException $e) {
                 if (!empty($messageList)) {
                     $this->batchConsume($consumer, $messageList);
+                    $batchTime = 0;
                 }
             }
         }
@@ -204,8 +205,6 @@ class ConsumerRunCommand extends Command
             throw $exception;
         } finally {
             $messageList = [];
-
-            $this->batchTime = 0;
 
             if ($consumer->isPropagationStopped()) {
                 $this->logger->info('Consumer has been propagation stopped forcibly');
