@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MarfaTech\Bundle\RabbitQueueBundle\Command;
 
+use DateTime;
 use Exception;
 use JsonException;
 use MarfaTech\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
@@ -136,11 +137,11 @@ class ConsumerRunCommand extends Command
             }
 
             $timeout = empty($messageList) ? $this->getIdleTimeout() : $this->getWaitTimeout();
-            $timeStart = microtime(true);
+            $timeStart = (int) (new DateTime())->format('Uu');
 
             try {
                 $this->client->wait($timeout);
-                $batchTime += microtime(true) - $timeStart;
+                $batchTime += (int) (new DateTime())->format('Uu') - $timeStart;
             } catch (AMQPTimeoutException $e) {
                 if (!empty($messageList)) {
                     $this->batchConsume($consumer, $messageList);
@@ -242,6 +243,6 @@ class ConsumerRunCommand extends Command
 
     private function getBatchTimeout(): int
     {
-        return $this->parameterBag->get('marfatech_rabbit_queue.consumer.batch_timeout');
+        return $this->parameterBag->get('marfatech_rabbit_queue.consumer.batch_timeout') * 1_000_000;
     }
 }
