@@ -1,4 +1,6 @@
 ## [Unreleased]
+
+## [3.1.0] - 2022-05-16
 ### Added
 - Symfony 6 support
 - Added config parameter `marfatech_rabbit_queue.consumer.batch_timeout`.
