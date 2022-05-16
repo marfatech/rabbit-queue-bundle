@@ -85,5 +85,6 @@ class MarfatechRabbitQueueExtension extends Extension
     {
         $container->setParameter('marfatech_rabbit_queue.consumer.idle_timeout', $consumerConfig['idle_timeout']);
         $container->setParameter('marfatech_rabbit_queue.consumer.wait_timeout', $consumerConfig['wait_timeout']);
+        $container->setParameter('marfatech_rabbit_queue.consumer.batch_timeout', $consumerConfig['batch_timeout']);
     }
 }

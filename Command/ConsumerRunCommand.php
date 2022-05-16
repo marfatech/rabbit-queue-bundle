@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MarfaTech\Bundle\RabbitQueueBundle\Command;
 
+use DateTime;
 use Exception;
 use JsonException;
 use MarfaTech\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
@@ -117,6 +118,7 @@ class ConsumerRunCommand extends Command
         $consumer = $this->consumerRegistry->getConsumer($name);
         $queueName = $consumer->getBindQueueName();
         $batchSize = $consumer->getBatchSize();
+        $batchTime = 0;
 
         $messageList = [];
 
@@ -126,17 +128,24 @@ class ConsumerRunCommand extends Command
         });
 
         while ($this->client->isConsuming()) {
-            if (count($messageList) === $batchSize) {
+            $isBatchAccumulated = count($messageList) === $batchSize;
+            $isBatchTimeout = $this->getBatchTimeout() > 0 && $batchTime >= $this->getBatchTimeout();
+
+            if ($isBatchAccumulated || $isBatchTimeout) {
                 $this->batchConsume($consumer, $messageList);
+                $batchTime = 0;
             }
 
             $timeout = empty($messageList) ? $this->getIdleTimeout() : $this->getWaitTimeout();
+            $timeStart = (int) (new DateTime())->format('Uu');
 
             try {
                 $this->client->wait($timeout);
+                $batchTime += (int) (new DateTime())->format('Uu') - $timeStart;
             } catch (AMQPTimeoutException $e) {
                 if (!empty($messageList)) {
                     $this->batchConsume($consumer, $messageList);
+                    $batchTime = 0;
                 }
             }
         }
@@ -230,5 +239,10 @@ class ConsumerRunCommand extends Command
     private function getWaitTimeout(): int
     {
         return $this->parameterBag->get('marfatech_rabbit_queue.consumer.wait_timeout');
+    }
+
+    private function getBatchTimeout(): int
+    {
+        return $this->parameterBag->get('marfatech_rabbit_queue.consumer.batch_timeout') * 1_000_000;
     }
 }
