@@ -14,15 +14,15 @@ class RewindPartialException extends RuntimeException
      * @var int[]
      */
     private array $rewindDeliveryTagList;
-    private array $contextInfoByTagList;
+    private array $deliveryTagContextList;
 
     /**
      * @param int[] $rewindDeliveryTagList
-     * @param array $contextInfoByTagList
+     * @param array $deliveryTagContextList
      *
      * @throws RabbitQueueException
      */
-    public function __construct(array $rewindDeliveryTagList, array $contextInfoByTagList = [])
+    public function __construct(array $rewindDeliveryTagList, array $deliveryTagContextList = [])
     {
         foreach ($rewindDeliveryTagList as $deliveryTag) {
             if (!is_int($deliveryTag)) {
@@ -31,7 +31,7 @@ class RewindPartialException extends RuntimeException
         }
 
         $this->rewindDeliveryTagList = $rewindDeliveryTagList;
-        $this->contextInfoByTagList = $contextInfoByTagList;
+        $this->deliveryTagContextList = $deliveryTagContextList;
 
         parent::__construct('Consumer rewind partial message list');
     }
@@ -44,8 +44,8 @@ class RewindPartialException extends RuntimeException
         return $this->rewindDeliveryTagList;
     }
 
-    public function getContextInfoByTagList(): array
+    public function getDeliveryTagContextList(): array
     {
-        return $this->contextInfoByTagList;
+        return $this->deliveryTagContextList;
     }
 }

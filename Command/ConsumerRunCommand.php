@@ -177,7 +177,7 @@ class ConsumerRunCommand extends Command
             $this->client->rewindList(
                 $consumer->getBindQueueName(),
                 $rewindMessageList,
-                $exception->getContextInfoByTagList(),
+                deliveryTagContextList: $exception->getDeliveryTagContextList(),
             );
 
             $this->client->ackList($ackMessageList);
@@ -190,8 +190,8 @@ class ConsumerRunCommand extends Command
             $this->client->rewindList(
                 $definition::getQueueName(),
                 $rewindMessageList,
-                $exception->getContextInfoByTagList(),
                 $exception->getDelay(),
+                $exception->getDeliveryTagContextList(),
             );
 
             $this->client->ackList($ackMessageList);
