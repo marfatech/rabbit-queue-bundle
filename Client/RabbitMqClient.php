@@ -80,22 +80,27 @@ class RabbitMqClient
     /**
      * @param string $queueName
      * @param AMQPMessage[] $messageList
+     * @param array $contextInfoByTagList
      * @param int $delay
      */
     public function rewindList(
         string $queueName,
         array $messageList,
+        array $contextInfoByTagList,
         int $delay = 0
     ): void {
         $this->ackList($messageList);
 
         foreach ($messageList as $message) {
+            $contextInfo = $contextInfoByTagList[(string) $message->getDeliveryTag()] ?? [];
+
             $headers = $message->has('application_headers') ? $message->get('application_headers') : new AMQPTable();
 
             $retryCount = $headers->getNativeData()[QueueHeaderOptionEnum::X_RETRY] ?? 0;
 
             $headers->set(QueueHeaderOptionEnum::X_DELAY, $delay * 1000);
             $headers->set(QueueHeaderOptionEnum::X_RETRY, ++$retryCount);
+            $headers->set(QueueHeaderOptionEnum::X_CONTEXT, $contextInfo);
 
             $message->set('application_headers', $headers);
 

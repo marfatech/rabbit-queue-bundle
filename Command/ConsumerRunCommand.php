@@ -174,7 +174,12 @@ class ConsumerRunCommand extends Command
 
             [$rewindMessageList, $ackMessageList] = $this->getPartialMessageList($messageList, $rewindDeliveryTagList);
 
-            $this->client->rewindList($consumer->getBindQueueName(), $rewindMessageList);
+            $this->client->rewindList(
+                $consumer->getBindQueueName(),
+                $rewindMessageList,
+                $exception->getContextInfoByTagList(),
+            );
+
             $this->client->ackList($ackMessageList);
         } catch (RewindDelayPartialException $exception) {
             $definition = $this->definitionRegistry->getDefinition($consumer->getBindQueueName());
@@ -182,7 +187,13 @@ class ConsumerRunCommand extends Command
 
             [$rewindMessageList, $ackMessageList] = $this->getPartialMessageList($messageList, $rewindDeliveryTagList);
 
-            $this->client->rewindList($definition::getQueueName(), $rewindMessageList, $exception->getDelay());
+            $this->client->rewindList(
+                $definition::getQueueName(),
+                $rewindMessageList,
+                $exception->getContextInfoByTagList(),
+                $exception->getDelay(),
+            );
+
             $this->client->ackList($ackMessageList);
         } catch (ConsumerSilentException $exception) {
             $this->client->nackList($messageList);
