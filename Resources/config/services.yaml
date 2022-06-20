@@ -1,20 +1,9 @@
 services:
     PhpAmqpLib\Connection\AMQPStreamConnection:
+        factory: [ 'MarfaTech\Bundle\RabbitQueueBundle\Factory\ConnectionFactory', 'createAMQPStreamConnection' ]
         arguments:
-            - '%marfatech_rabbit_queue.connection.host%'
-            - '%marfatech_rabbit_queue.connection.port%'
-            - '%marfatech_rabbit_queue.connection.username%'
-            - '%marfatech_rabbit_queue.connection.password%'
-            - '%marfatech_rabbit_queue.connection.vhost%'
-            - false
-            - 'AMQPLAIN'
-            - ~
-            - 'en_US'
-            - '%marfatech_rabbit_queue.connection.connection_timeout%'
-            - '%marfatech_rabbit_queue.connection.read_write_timeout%'
-            - ~
-            - false
-            - '%marfatech_rabbit_queue.connection.heartbeat%'
+            - '%marfatech_rabbit_queue.hosts%'
+            - '%marfatech_rabbit_queue.options%'
 
     MarfaTech\Bundle\RabbitQueueBundle\Registry\ConsumerRegistry:
         arguments:

@@ -1,4 +1,25 @@
 ## [Unreleased]
+### Added
+- Added `ConnectionFactory` for multiple connections support.
+
+### Changed
+- Changed `DependencyInjection\Configuration::getConfigTreeBuilder` method to support `hosts` for multiple hosts
+and `options` for all of them separetely.
+- Changed `DependencyInjection\Configuration::getConfigTreeBuilder` scalar nonde `username` renamed to `user` in order
+to corrsepond key name in `PhpAmqpLib\Connection\AbstractConnection::create_connection`.
+- Changed `DependencyInjection\MarfatechRabbitQueueExtension::load` to set `hosts` and `options` instead `connections`.
+- Changed `Resources/config/services.yaml` to set service factory for `PhpAmqpLib\Connection\AMQPStreamConnection`.
+
+### Removed
+- Deleted setting of the path `marfatech_rabbit_queue.connections`.
+- Deleted setting of the parameter `marfatech_rabbit_queue.connection.host`.
+- Deleted setting of the parameter `marfatech_rabbit_queue.connection.port`.
+- Deleted setting of the parameter `marfatech_rabbit_queue.connection.username`.
+- Deleted setting of the parameter `marfatech_rabbit_queue.connection.password`.
+- Deleted setting of the parameter `marfatech_rabbit_queue.connection.vhost`.
+- Deleted setting of the parameter `marfatech_rabbit_queue.connection.connection_timeout`.
+- Deleted setting of the parameter `marfatech_rabbit_queue.connection.read_write_timeout`.
+- Deleted setting of the parameter `marfatech_rabbit_queue.connection.heartbeat`.
 
 ## [3.1.0] - 2022-05-16
 ### Added

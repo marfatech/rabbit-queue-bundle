@@ -85,21 +85,24 @@ class AppKernel extends Kernel
 ```yaml
 # app/packages/marfatech_rabbit_queue.yaml
 marfatech_rabbit_queue:
-    connections:
+    hosts:                                # список хостов для подключения
         default:
             host: 'rabbitmq'              # хост для подключения к rabbitMQ
             port: 5672                    # порт для подключения к rabbitMQ
             username: 'rabbitmq_user'     # логин для подключения к rabbitMQ
             password: 'rabbitmq_password' # пароль для подключения к rabbitMQ
             vhost: 'example_vhost'        # виртуальный хост для подключения (необязательный параметр)
-            connection_timeout: 3         # таймаут соединения
-            read_write_timeout: 3         # таймаут на чтение/запись
-            heartbeat: 0                  # частота heartbeat
+    options:                              # опции для попыток подключений ко всем хостам из списка
+        connection_timeout: 3             # таймаут соединения
+        read_write_timeout: 3             # таймаут на чтение/запись
+        heartbeat: 0                      # частота heartbeat
     consumer:
         wait_timeout: 3                   # таймаут ожидания новых сообщений для обработки пачки в секундах (по умолчанию 3)
         idle_timeout: 0                   # таймаут ожидания сообщений в пустой очереди в секундах (по умолчанию 0 - нет таймаута)
         batch_timeout: 0                  # таймаут сборки пачки сообщений в секундах (по умолчанию 0 - нет таймаута)
 ```
+
+Подключение будет происходить для нескольких хостов. [Multiple hosts connections](https://github.com/php-amqplib/php-amqplib#multiple-hosts-connections) 
 
 Описание компонентов
 -------------
