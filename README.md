@@ -85,14 +85,17 @@ class AppKernel extends Kernel
 ```yaml
 # app/packages/marfatech_rabbit_queue.yaml
 marfatech_rabbit_queue:
-    hosts:                                # список хостов для подключения
+    connections:
         default:
             host: 'rabbitmq'              # хост для подключения к rabbitMQ
             port: 5672                    # порт для подключения к rabbitMQ
             username: 'rabbitmq_user'     # логин для подключения к rabbitMQ
             password: 'rabbitmq_password' # пароль для подключения к rabbitMQ
             vhost: 'example_vhost'        # виртуальный хост для подключения (необязательный параметр)
-    options:                              # опции для попыток подключений ко всем хостам из списка
+            connection_timeout: 3         # таймаут соединения @deprecated используйте options.connection_timeout
+            read_write_timeout: 3         # таймаут на чтение/запись @deprecated используйте options.read_write_timeout
+            heartbeat: 0                  # частота heartbeat @deprecated используйте options.heartbeat
+    options:                              # опции для попыток подключений ко всем хостам из списка по очереди (необязательный параметр)
         connection_timeout: 3             # таймаут соединения
         read_write_timeout: 3             # таймаут на чтение/запись
         heartbeat: 0                      # частота heartbeat
@@ -102,7 +105,10 @@ marfatech_rabbit_queue:
         batch_timeout: 0                  # таймаут сборки пачки сообщений в секундах (по умолчанию 0 - нет таймаута)
 ```
 
-Подключение будет происходить для нескольких хостов. [Multiple hosts connections](https://github.com/php-amqplib/php-amqplib#multiple-hosts-connections) 
+При указании `options` значения ключей конфигурации `connection_timeout`, `read_write_timeout`, `heartbeat` будут взяты из него.
+В случае если `options` не указан значения этих ключей конфигурации будет взято из первого значения ключа конфигурации `connections`.
+
+Попытка подключения к хостам, указанных в ключа конфигурации `connection`, будет происходить по очереди и вернет первое удачное подключение. [Multiple hosts connections](https://github.com/php-amqplib/php-amqplib#multiple-hosts-connections) 
 
 Описание компонентов
 -------------

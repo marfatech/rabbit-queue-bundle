@@ -1,6 +1,6 @@
 services:
     PhpAmqpLib\Connection\AMQPStreamConnection:
-        factory: [ 'MarfaTech\Bundle\RabbitQueueBundle\Factory\ConnectionFactory', 'createAMQPStreamConnection' ]
+        factory: [ 'MarfaTech\Bundle\RabbitQueueBundle\Factory\ConnectionFactory', 'createFirstSuccessfulAMQPStreamConnection' ]
         arguments:
             - '%marfatech_rabbit_queue.hosts%'
             - '%marfatech_rabbit_queue.options%'
