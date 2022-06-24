@@ -29,7 +29,9 @@ Rabbit Queue Bundle
     - [Шаг 3: Загрузка схем очередей RabbitMQ](#шаг-3-загрузка-схем-очередей-rabbitmq)
     - [Шаг 4: Запуск consumer'а](#шаг-4-запуск-consumerа)
 7. [Использование `RouterPublisher`](#использование-routerpublisher)
-8. [Лицензия](#лицензия)
+8. [Примеры](#примеры)
+   - [Использование RewindPartialException](#использование-rewindpartialexception)
+9. [Лицензия](#лицензия)
 
 Требования
 ---------
@@ -665,6 +667,17 @@ $producer->put('queue_name', $data, $options, 'small.black.bicycle'); // НЕ п
 ```
 
 **Важно!!! Длина routeKey не должна превышать 255 символов**
+
+Примеры
+---------
+### Использование RewindPartialException
+Чтобы перемотать сообщения в конец очереди, нужно выбросить исключение [RewindPartialException](./Exception/RewindPartialException.php).
+Первый аргумент принимает массив идентификаторов (тегов) сообщений. Второй аргумент - массив, где ключ - тег сообщения,
+значение - контекст сообщения. С помощью контекста можно управлять логикой обработки сообщения. Получить контекст:
+```php
+$headers = $message->get('application_headers');
+$context = $headers->getNativeData()[QueueHeaderOptionEnum::X_CONTEXT];
+```
 
 Лицензия
 --------

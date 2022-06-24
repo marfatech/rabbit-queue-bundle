@@ -19,4 +19,5 @@ class QueueHeaderOptionEnum
     public const X_RETRY = 'x-retry';
     public const X_DEDUPLICATION_HEADER = 'x-deduplication-header';
     public const X_CACHE_TTL = 'x-cache-ttl';
+    public const X_CONTEXT = 'x-context';
 }
