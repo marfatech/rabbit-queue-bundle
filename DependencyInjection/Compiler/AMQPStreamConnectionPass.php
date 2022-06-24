@@ -30,6 +30,5 @@ class AMQPStreamConnectionPass implements CompilerPassInterface
         ;
 
         $container->setDefinition(AMQPStreamConnection::class, $connectionDefinition);
-        $container->removeDefinition('marfatech_rabbit_queue.hosts');
     }
 }
