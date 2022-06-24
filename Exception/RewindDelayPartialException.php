@@ -15,14 +15,16 @@ class RewindDelayPartialException extends RuntimeException
      */
     private array $rewindDeliveryTagList;
     private int $delay;
+    private array $deliveryTagContextList;
 
     /**
      * @param int[] $rewindDeliveryTagList
      * @param int $delay
+     * @param array $deliveryTagContextList
      *
      * @throws RabbitQueueException
      */
-    public function __construct(array $rewindDeliveryTagList, int $delay)
+    public function __construct(array $rewindDeliveryTagList, int $delay, array $deliveryTagContextList = [])
     {
         foreach ($rewindDeliveryTagList as $deliveryTag) {
             if (!is_int($deliveryTag)) {
@@ -32,6 +34,7 @@ class RewindDelayPartialException extends RuntimeException
 
         $this->rewindDeliveryTagList = $rewindDeliveryTagList;
         $this->delay = $delay;
+        $this->deliveryTagContextList = $deliveryTagContextList;
 
         parent::__construct('Consumer rewind delay partial messageList');
     }
@@ -47,5 +50,10 @@ class RewindDelayPartialException extends RuntimeException
     public function getDelay(): int
     {
         return $this->delay;
+    }
+
+    public function getDeliveryTagContextList(): array
+    {
+        return $this->deliveryTagContextList;
     }
 }

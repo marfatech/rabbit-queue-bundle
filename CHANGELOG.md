@@ -1,4 +1,7 @@
 ## [Unreleased]
+### Added
+- Provided message context while rewind that from queue by `QueueHeaderOptionEnum::X_CONTEXT`.
+- Argument `deliveryTagContextList` in rewind exceptions for transfer message context.
 
 ## [3.1.0] - 2022-05-16
 ### Added
