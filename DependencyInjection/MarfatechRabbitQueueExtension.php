@@ -2,6 +2,15 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the RabbitQueueBundle package.
+ *
+ * (c) MarfaTech <https://marfa-tech.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace MarfaTech\Bundle\RabbitQueueBundle\DependencyInjection;
 
 use Exception;
@@ -9,14 +18,12 @@ use MarfaTech\Bundle\RabbitQueueBundle\Consumer\ConsumerInterface;
 use MarfaTech\Bundle\RabbitQueueBundle\Definition\DefinitionInterface;
 use MarfaTech\Bundle\RabbitQueueBundle\Hydrator\HydratorInterface;
 use MarfaTech\Bundle\RabbitQueueBundle\Publisher\PublisherInterface;
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-use function array_key_first;
-use function count;
+use function current;
 
 class MarfatechRabbitQueueExtension extends Extension
 {
@@ -31,7 +38,7 @@ class MarfatechRabbitQueueExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('marfatech_rabbit_queue.hydrator_name', $config['hydrator_name']);
-        $this->setConnectionParams($container, $config['connections']);
+        $this->setConnectionParams($container, $config);
         $this->setConsumerParams($container, $config['consumer']);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
@@ -58,27 +65,37 @@ class MarfatechRabbitQueueExtension extends Extension
         ;
     }
 
-    private function setConnectionParams(ContainerBuilder $container, array $connections): void
+    private function setConnectionParams(ContainerBuilder $container, array $config): void
     {
-        if (count($connections) > 1) {
-            $message = 'marfatech_rabbit_queue.connections parameter support only first connection.';
+        $hosts = [];
 
-            $exception = new InvalidConfigurationException($message);
-            $exception->setPath('marfatech_rabbit_queue.connections');
-
-            throw $exception;
+        foreach ($config['connections'] as $connection) {
+            $hosts[] = [
+                'host' => $connection['host'],
+                'port' => $connection['port'],
+                'user' => $connection['username'],
+                'password' => $connection['password'],
+                'vhost' => $connection['vhost'],
+            ];
         }
 
-        $connection = $connections[array_key_first($connections)];
+        $defaultConnection = current($config['connections']);
+        $connectionOptions = [
+            'connection_timeout' => $defaultConnection['connection_timeout'],
+            'read_write_timeout' => $defaultConnection['read_write_timeout'],
+            'heartbeat' => $defaultConnection['heartbeat'],
+        ];
 
-        $container->setParameter('marfatech_rabbit_queue.connection.host', $connection['host']);
-        $container->setParameter('marfatech_rabbit_queue.connection.port', $connection['port']);
-        $container->setParameter('marfatech_rabbit_queue.connection.username', $connection['username']);
-        $container->setParameter('marfatech_rabbit_queue.connection.password', $connection['password']);
-        $container->setParameter('marfatech_rabbit_queue.connection.vhost', $connection['vhost']);
-        $container->setParameter('marfatech_rabbit_queue.connection.connection_timeout', $connection['connection_timeout']);
-        $container->setParameter('marfatech_rabbit_queue.connection.read_write_timeout', $connection['read_write_timeout']);
-        $container->setParameter('marfatech_rabbit_queue.connection.heartbeat', $connection['heartbeat']);
+        $isDefaultConnectionOptions = $connectionOptions === Configuration::OPTIONS_DEFAULT_LIST;
+
+        if ($isDefaultConnectionOptions) {
+            $options = $config['options'];
+        } else {
+            $options = $connectionOptions;
+        }
+
+        $container->setParameter('marfatech_rabbit_queue.hosts', $hosts);
+        $container->setParameter('marfatech_rabbit_queue.options', $options);
     }
 
     private function setConsumerParams(ContainerBuilder $container, array $consumerConfig): void

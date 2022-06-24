@@ -1,21 +1,4 @@
 services:
-    PhpAmqpLib\Connection\AMQPStreamConnection:
-        arguments:
-            - '%marfatech_rabbit_queue.connection.host%'
-            - '%marfatech_rabbit_queue.connection.port%'
-            - '%marfatech_rabbit_queue.connection.username%'
-            - '%marfatech_rabbit_queue.connection.password%'
-            - '%marfatech_rabbit_queue.connection.vhost%'
-            - false
-            - 'AMQPLAIN'
-            - ~
-            - 'en_US'
-            - '%marfatech_rabbit_queue.connection.connection_timeout%'
-            - '%marfatech_rabbit_queue.connection.read_write_timeout%'
-            - ~
-            - false
-            - '%marfatech_rabbit_queue.connection.heartbeat%'
-
     MarfaTech\Bundle\RabbitQueueBundle\Registry\ConsumerRegistry:
         arguments:
             - !tagged_locator { tag: !php/const MarfaTech\Bundle\RabbitQueueBundle\Consumer\ConsumerInterface::TAG, default_index_method: 'getName' }

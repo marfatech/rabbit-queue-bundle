@@ -94,14 +94,23 @@ marfatech_rabbit_queue:
             username: 'rabbitmq_user'     # логин для подключения к rabbitMQ
             password: 'rabbitmq_password' # пароль для подключения к rabbitMQ
             vhost: 'example_vhost'        # виртуальный хост для подключения (необязательный параметр)
-            connection_timeout: 3         # таймаут соединения
-            read_write_timeout: 3         # таймаут на чтение/запись
-            heartbeat: 0                  # частота heartbeat
+            connection_timeout: 3         # таймаут соединения @deprecated используйте options.connection_timeout
+            read_write_timeout: 3         # таймаут на чтение/запись @deprecated используйте options.read_write_timeout
+            heartbeat: 0                  # частота heartbeat @deprecated используйте options.heartbeat
+    options:                              # опции для попыток подключений ко всем хостам из списка по очереди (необязательный параметр)
+        connection_timeout: 3             # таймаут соединения
+        read_write_timeout: 3             # таймаут на чтение/запись
+        heartbeat: 0                      # частота heartbeat
     consumer:
         wait_timeout: 3                   # таймаут ожидания новых сообщений для обработки пачки в секундах (по умолчанию 3)
         idle_timeout: 0                   # таймаут ожидания сообщений в пустой очереди в секундах (по умолчанию 0 - нет таймаута)
         batch_timeout: 0                  # таймаут сборки пачки сообщений в секундах (по умолчанию 0 - нет таймаута)
 ```
+
+При указании `options` значения ключей конфигурации `connection_timeout`, `read_write_timeout`, `heartbeat` будут взяты из него.
+В случае если `options` не указан значения этих ключей конфигурации будет взято из первого значения ключа конфигурации `connections`.
+
+Попытка подключения к хостам, указанных в ключе конфигурации `connection`, будет происходить по очереди и вернет первое удачное подключение. [Multiple hosts connections](https://github.com/php-amqplib/php-amqplib#multiple-hosts-connections) 
 
 Описание компонентов
 -------------

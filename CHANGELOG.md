@@ -1,5 +1,13 @@
 ## [Unreleased]
 ### Added
+- Added multiple connections support.
+- Added `ConnectionFactory` for multiple connections support.
+
+### Changed
+- Configuration keys `connection_timeout`, `read_write_timeout`, `heartbeat` in `connections` are deprecated. They are moved to a separate configuration key `options`.
+
+### Removed
+- Deleted setting of the path `marfatech_rabbit_queue.connections`.
 - Provided message context while rewind that from queue by `QueueHeaderOptionEnum::X_CONTEXT`.
 - Argument `deliveryTagContextList` in rewind exceptions for transfer message context.
 
