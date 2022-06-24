@@ -108,7 +108,7 @@ marfatech_rabbit_queue:
 При указании `options` значения ключей конфигурации `connection_timeout`, `read_write_timeout`, `heartbeat` будут взяты из него.
 В случае если `options` не указан значения этих ключей конфигурации будет взято из первого значения ключа конфигурации `connections`.
 
-Попытка подключения к хостам, указанных в ключа конфигурации `connection`, будет происходить по очереди и вернет первое удачное подключение. [Multiple hosts connections](https://github.com/php-amqplib/php-amqplib#multiple-hosts-connections) 
+Попытка подключения к хостам, указанных в ключе конфигурации `connection`, будет происходить по очереди и вернет первое удачное подключение. [Multiple hosts connections](https://github.com/php-amqplib/php-amqplib#multiple-hosts-connections) 
 
 Описание компонентов
 -------------

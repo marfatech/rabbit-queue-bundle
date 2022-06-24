@@ -13,8 +13,14 @@ declare(strict_types=1);
 
 namespace MarfaTech\Bundle\RabbitQueueBundle;
 
+use MarfaTech\Bundle\RabbitQueueBundle\DependencyInjection\Compiler\AMQPStreamConnectionPass;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class MarfatechRabbitQueueBundle extends Bundle
 {
+    public function build(ContainerBuilder $container): void
+    {
+        $container->addCompilerPass(new AMQPStreamConnectionPass());
+    }
 }

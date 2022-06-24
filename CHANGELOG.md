@@ -5,7 +5,6 @@
 
 ### Changed
 - Configuration keys `connection_timeout`, `read_write_timeout`, `heartbeat` in `connections` are deprecated. They are moved to a separate configuration key `options`.
-- Сopyrights are indicated.
 
 ### Removed
 - Deleted setting of the path `marfatech_rabbit_queue.connections`.

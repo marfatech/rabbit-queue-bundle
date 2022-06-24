@@ -1,10 +1,4 @@
 services:
-    PhpAmqpLib\Connection\AMQPStreamConnection:
-        factory: [ 'MarfaTech\Bundle\RabbitQueueBundle\Factory\ConnectionFactory', 'createFirstSuccessfulAMQPStreamConnection' ]
-        arguments:
-            - '%marfatech_rabbit_queue.hosts%'
-            - '%marfatech_rabbit_queue.options%'
-
     MarfaTech\Bundle\RabbitQueueBundle\Registry\ConsumerRegistry:
         arguments:
             - !tagged_locator { tag: !php/const MarfaTech\Bundle\RabbitQueueBundle\Consumer\ConsumerInterface::TAG, default_index_method: 'getName' }

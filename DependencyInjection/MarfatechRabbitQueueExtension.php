@@ -80,51 +80,18 @@ class MarfatechRabbitQueueExtension extends Extension
         }
 
         $defaultConnection = current($config['connections']);
-        $container->setParameter('marfatech_rabbit_queue.connection.host', $defaultConnection['host']);
-        $container->setParameter('marfatech_rabbit_queue.connection.port', $defaultConnection['port']);
-        $container->setParameter('marfatech_rabbit_queue.connection.username', $defaultConnection['username']);
-        $container->setParameter('marfatech_rabbit_queue.connection.password', $defaultConnection['password']);
-        $container->setParameter('marfatech_rabbit_queue.connection.vhost', $defaultConnection['vhost']);
+        $connectionOptions = [
+            'connection_timeout' => $defaultConnection['connection_timeout'],
+            'read_write_timeout' => $defaultConnection['read_write_timeout'],
+            'heartbeat' => $defaultConnection['heartbeat'],
+        ];
 
+        $isDefaultConnectionOptions = $connectionOptions === Configuration::OPTIONS_DEFAULT_LIST;
 
-        if (isset($config['options'])) {
+        if ($isDefaultConnectionOptions) {
             $options = $config['options'];
-
-            $container->setParameter(
-                'marfatech_rabbit_queue.connection.connection_timeout',
-                $options['connection_timeout']
-            );
-
-            $container->setParameter(
-                'marfatech_rabbit_queue.connection.read_write_timeout',
-                $options['read_write_timeout']
-            );
-
-            $container->setParameter(
-                'marfatech_rabbit_queue.connection.heartbeat',
-                $options['heartbeat']
-            );
         } else {
-            $options = [
-                'connection_timeout' => $defaultConnection['connection_timeout'],
-                'read_write_timeout' => $defaultConnection['read_write_timeout'],
-                'heartbeat' => $defaultConnection['heartbeat'],
-            ];
-
-            $container->setParameter(
-                'marfatech_rabbit_queue.connection.connection_timeout',
-                $defaultConnection['connection_timeout']
-            );
-
-            $container->setParameter(
-                'marfatech_rabbit_queue.connection.read_write_timeout',
-                $defaultConnection['read_write_timeout']
-            );
-
-            $container->setParameter(
-                'marfatech_rabbit_queue.connection.heartbeat',
-                $defaultConnection['heartbeat']
-            );
+            $options = $connectionOptions;
         }
 
         $container->setParameter('marfatech_rabbit_queue.hosts', $hosts);
