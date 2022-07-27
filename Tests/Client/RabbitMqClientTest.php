@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace MarfaTech\Bundle\RabbitQueueBundle\Tests\Client;
 
 use MarfaTech\Bundle\RabbitQueueBundle\Client\RabbitMqClient;
+use MarfaTech\Bundle\RabbitQueueBundle\Dto\QueuePoolMessage;
 use MarfaTech\Bundle\RabbitQueueBundle\Exception\QueuePoolNestedLevelException;
 use MarfaTech\Bundle\RabbitQueueBundle\Component\QueuePool;
 use MarfaTech\Bundle\RabbitQueueBundle\Exception\QueuePoolRollbackException;
@@ -67,7 +68,7 @@ class RabbitMqClientTest extends TestCase
         $queuePool
             ->expects(self::once())
             ->method('getMessageList')
-            ->willReturn([[$messageMock, self::EXCHANGE_NAME, self::ROUTING_KEY]])
+            ->willReturn([new QueuePoolMessage($messageMock, self::EXCHANGE_NAME, self::ROUTING_KEY)])
         ;
         $queuePool
             ->expects(self::once())
