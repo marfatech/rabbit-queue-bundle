@@ -84,6 +84,7 @@ class MarfatechRabbitQueueExtension extends Extension
             'connection_timeout' => $defaultConnection['connection_timeout'],
             'read_write_timeout' => $defaultConnection['read_write_timeout'],
             'heartbeat' => $defaultConnection['heartbeat'],
+            'lazy_connection' => $config['options']['lazy_connection'],
         ];
 
         $isDefaultConnectionOptions = $connectionOptions === Configuration::OPTIONS_DEFAULT_LIST;

@@ -82,3 +82,7 @@ services:
     MarfaTech\Bundle\RabbitQueueBundle\Client\RabbitMqClient:
         arguments:
             - '@PhpAmqpLib\Connection\AMQPStreamConnection'
+            - '@logger'
+            - '@MarfaTech\Bundle\RabbitQueueBundle\Component\QueuePool'
+
+    MarfaTech\Bundle\RabbitQueueBundle\Component\QueuePool:

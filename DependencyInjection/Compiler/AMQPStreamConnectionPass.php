@@ -23,10 +23,14 @@ class AMQPStreamConnectionPass implements CompilerPassInterface
         $options = $container->getParameter('marfatech_rabbit_queue.options');
         $container->getParameterBag()->remove('marfatech_rabbit_queue.options');
 
+        $isLazyConnection = $options['lazy_connection'];
+        unset($options['lazy_connection']);
+
         $connectionDefinition = new Definition(AMQPStreamConnection::class);
         $connectionDefinition
             ->setFactory([ConnectionFactory::class, 'createFirstSuccessfulAMQPStreamConnection'])
             ->setArguments([$hosts, $options])
+            ->setLazy($isLazyConnection)
         ;
 
         $container->setDefinition(AMQPStreamConnection::class, $connectionDefinition);

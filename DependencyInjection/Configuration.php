@@ -27,6 +27,7 @@ class Configuration implements ConfigurationInterface
         'connection_timeout' => 3,
         'read_write_timeout' => 3,
         'heartbeat' => 0,
+        'lazy_connection' => false,
     ];
 
     /**
@@ -88,6 +89,9 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->integerNode('heartbeat')
                             ->defaultValue(self::OPTIONS_DEFAULT_LIST['heartbeat'])
+                        ->end()
+                        ->booleanNode('lazy_connection')
+                            ->defaultValue(self::OPTIONS_DEFAULT_LIST['lazy_connection'])
                         ->end()
                     ->end()
                 ->end()

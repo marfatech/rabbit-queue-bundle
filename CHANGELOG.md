@@ -2,9 +2,14 @@
 ### Added
 - Added multiple connections support.
 - Added `ConnectionFactory` for multiple connections support.
+- Added in memory queue pool for transaction mechanizm emulation.
+- Added `options.lazy_connection` configuration. 
+- Added checking connection and recconnect before putting messages in case of heartbeat falling.
+- Added unit tests for `RabbitMqClient` and `QueuePool`.
 
 ### Changed
 - Configuration keys `connection_timeout`, `read_write_timeout`, `heartbeat` in `connections` are deprecated. They are moved to a separate configuration key `options`.
+- `RabbitMqClient` constructor parameters changed from `private` to `protected` access level.
 
 ### Removed
 - Deleted setting of the path `marfatech_rabbit_queue.connections`.

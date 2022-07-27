@@ -101,6 +101,7 @@ marfatech_rabbit_queue:
         connection_timeout: 3             # таймаут соединения
         read_write_timeout: 3             # таймаут на чтение/запись
         heartbeat: 0                      # частота heartbeat
+        lazy_connection: false            # Lazy соединение инициализируется в момент использования
     consumer:
         wait_timeout: 3                   # таймаут ожидания новых сообщений для обработки пачки в секундах (по умолчанию 3)
         idle_timeout: 0                   # таймаут ожидания сообщений в пустой очереди в секундах (по умолчанию 0 - нет таймаута)
@@ -110,7 +111,9 @@ marfatech_rabbit_queue:
 При указании `options` значения ключей конфигурации `connection_timeout`, `read_write_timeout`, `heartbeat` будут взяты из него.
 В случае если `options` не указан значения этих ключей конфигурации будет взято из первого значения ключа конфигурации `connections`.
 
-Попытка подключения к хостам, указанных в ключе конфигурации `connection`, будет происходить по очереди и вернет первое удачное подключение. [Multiple hosts connections](https://github.com/php-amqplib/php-amqplib#multiple-hosts-connections) 
+Попытка подключения к хостам, указанных в ключе конфигурации `connection`, будет происходить по очереди и вернет первое удачное подключение. [Multiple hosts connections](https://github.com/php-amqplib/php-amqplib#multiple-hosts-connections)
+
+При указании `lazy_connection` = `true` соединение будет инициализировано не при инициализации всех классов, а в момент использования.   
 
 Описание компонентов
 -------------
