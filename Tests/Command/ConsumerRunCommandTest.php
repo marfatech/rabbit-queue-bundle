@@ -77,60 +77,58 @@ class ConsumerRunCommandTest extends TestCase
 
     public function testExecuteWithClientRewindListWithMessageTagTitle(): void
     {
-        $mockExampleConsumer = $this->createMock(ExampleConsumer::class);
-        $mockExampleConsumer
+        $exampleConsumerMock = $this->createMock(ExampleConsumer::class);
+        $exampleConsumerMock
             ->method('process')
             ->will(
                 $this->throwException(
                     new RewindPartialException(
                         [],
                         [
-                            'test' => 'succesfull',
+                            'test' => 'successful',
                         ],
                     )
                 )
             )
         ;
 
-        $mockConsumerRegistry = $this->createMock(ConsumerRegistry::class);
-        $mockConsumerRegistry
+        $consumerRegistryMock = $this->createMock(ConsumerRegistry::class);
+        $consumerRegistryMock
             ->method('getConsumer')
-            ->willReturn($mockExampleConsumer)
+            ->willReturn($exampleConsumerMock)
         ;
 
-        $mockChannel = $this->createMock(AMQPChannel::class);
-        $mockChannel
+        $channelMock = $this->createMock(AMQPChannel::class);
+        $channelMock
             ->method('basic_consume')
             ->willReturn('')
         ;
-        $mockChannel
+        $channelMock
             ->method('is_consuming')
             ->willReturn(true)
         ;
-        $mockChannel
+        $channelMock
             ->method('publish_batch')
-            ->will(
-            $this->throwException(new RabbitQueueException())
-        )
+            ->will($this->throwException(new RabbitQueueException()))
         ;
 
         ob_start();
-        $mockConnection = $this->createMock(AMQPStreamConnection::class);
-        $mockConnection
+        $connectionMock = $this->createMock(AMQPStreamConnection::class);
+        $connectionMock
             ->method('channel')
-            ->willReturn($mockChannel)
+            ->willReturn($channelMock)
         ;
         ob_end_clean();
 
 
-        $mockRabbitClient = $this->getMockBuilder(RabbitMqClient::class)
-            ->setConstructorArgs([$mockConnection])
+        $rabbitClientMock = $this->getMockBuilder(RabbitMqClient::class)
+            ->setConstructorArgs([$connectionMock])
             ->enableOriginalConstructor()
             ->enableProxyingToOriginalMethods()
             ->getMock()
         ;
 
-        $mockRabbitClient
+        $rabbitClientMock
             ->expects(self::once())
             ->method('rewindList')
             ->withConsecutive(
@@ -139,7 +137,7 @@ class ConsumerRunCommandTest extends TestCase
                     [],
                     0,
                     [
-                        'test' => 'succesfull',
+                        'test' => 'successful',
                     ],
                 ]
             )
@@ -148,8 +146,8 @@ class ConsumerRunCommandTest extends TestCase
         $command = new ConsumerRunCommand();
 
         $command->dependencyInjection(
-            $mockConsumerRegistry,
-            $mockRabbitClient,
+            $consumerRegistryMock,
+            $rabbitClientMock,
             $this->createMock(DefinitionRegistry::class),
             $this->createMock(ParameterBagInterface::class)
         );

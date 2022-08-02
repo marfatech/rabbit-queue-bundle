@@ -31,8 +31,8 @@ class RabbitClientTest extends TestCase
     {
         ob_start();
         $queueName = 'test_queue';
-        $deliveryTag = 'testDeliveryTag';
-        $rewindReason = 'testRewind';
+        $deliveryTag = 3;
+        $rewindReason = ['abc'];
 
         $headers = new AMQPTable();
         $headers->set(QueueHeaderOptionEnum::X_DELAY, 0);
@@ -43,8 +43,8 @@ class RabbitClientTest extends TestCase
         $expectedMessage->setDeliveryInfo($deliveryTag, '', '', '');
         $expectedMessage->set('application_headers', $headers);
 
-        $mockChannel = $this->createMock(AMQPChannel::class);
-        $mockChannel
+        $channelMock = $this->createMock(AMQPChannel::class);
+        $channelMock
             ->expects(self::once())
             ->method('batch_basic_publish')
             ->withConsecutive(
@@ -56,14 +56,14 @@ class RabbitClientTest extends TestCase
             )
         ;
 
-        $mockConnection = $this->createMock(AMQPStreamConnection::class);
-        $mockConnection
+        $connectionMock = $this->createMock(AMQPStreamConnection::class);
+        $connectionMock
             ->method('channel')
-            ->willReturn($mockChannel)
+            ->willReturn($channelMock)
         ;
 
-        $mockRabbitClient = $this->getMockBuilder(RabbitMqClient::class)
-            ->setConstructorArgs([$mockConnection])
+        $rabbitClientMock = $this->getMockBuilder(RabbitMqClient::class)
+            ->setConstructorArgs([$connectionMock])
             ->enableOriginalConstructor()
             ->enableProxyingToOriginalMethods()
             ->getMock()
@@ -72,7 +72,7 @@ class RabbitClientTest extends TestCase
         $message = new AMQPMessage();
         $message->setDeliveryInfo($deliveryTag, '', '', '');
 
-        $mockRabbitClient->rewindList($queueName, [$message], deliveryTagContextList: [$deliveryTag => $rewindReason]);
+        $rabbitClientMock->rewindList($queueName, [$message], deliveryTagContextList: [$deliveryTag => $rewindReason]);
         ob_end_clean();
     }
 }
