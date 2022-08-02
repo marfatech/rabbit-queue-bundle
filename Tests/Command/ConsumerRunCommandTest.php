@@ -120,7 +120,6 @@ class ConsumerRunCommandTest extends TestCase
         ;
         ob_end_clean();
 
-
         $rabbitClientMock = $this->getMockBuilder(RabbitMqClient::class)
             ->setConstructorArgs([$connectionMock])
             ->enableOriginalConstructor()
